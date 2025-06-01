@@ -47,7 +47,7 @@ export default function Header() {
         }`;
 
     return (
-        <header className="h-[86px] px-4 sm:px-8 md:px-12 lg:px-[120px] flex items-center justify-between border-[#bebebe] relative" style={{ background: "rgba(255, 255, 255, 0.05)" }}>
+        <header className="h-[86px] px-4 sm:px-8 md:px-12 lg:px-[120px] flex items-center justify-between border-[#bebebe] relative" style={{ background: "#070B1F" }}>
             <div>
                 <NavLink to="/">
                     <img 
@@ -139,7 +139,7 @@ export default function Header() {
                         className="absolute top-[86px] left-0 right-0 lg:hidden"
                         initial="closed"
                         animate="open"
-                        style={{ background: "rgba(255, 255, 255, 0.05)" }}
+                        style={{ background: "#070B1F" }}
                         exit="closed"
                         variants={menuVariants}
                     >
