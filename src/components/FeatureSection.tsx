@@ -31,7 +31,7 @@ const FeatureSection: React.FC = () => {
         {features.map((item, idx) => (
           <div
             key={idx}
-            className="bg-[#131927] px-6 md:px-7.5 py-6 md:py-8 rounded-xl text-left shadow-md w-full md:w-auto"
+            className="bg-[#131927] px-6 md:px-7.5 py-6 md:py-8 rounded-xl text-left shadow-md w-full md:flex-1"
           >
             <div className="text-3xl mb-4 md:mb-4.5">
               {item.icon.startsWith("/") ? (
