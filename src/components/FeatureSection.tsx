@@ -26,23 +26,25 @@ const FeatureSection: React.FC = () => {
   ];
 
   return (
-    <div className="flex justify-center gap-6 mt-10">
-      {features.map((item, idx) => (
-        <div
-          key={idx}
-          className="bg-[#131927] px-7.5 rounded-xl text-left  shadow-md "
-        >
-          <div className="text-3xl mb-4.5 mt-8">
-            {item.icon.startsWith("/") ? (
-              <img src={item.icon} alt={item.title} className="w-8 h-8" />
-            ) : (
-              item.icon
-            )}
+    <div className="container mx-auto px-4">
+      <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-6 mt-10">
+        {features.map((item, idx) => (
+          <div
+            key={idx}
+            className="bg-[#131927] px-6 md:px-7.5 py-6 md:py-8 rounded-xl text-left shadow-md w-full md:w-auto"
+          >
+            <div className="text-3xl mb-4 md:mb-4.5">
+              {item.icon.startsWith("/") ? (
+                <img src={item.icon} alt={item.title} className="w-8 h-8" />
+              ) : (
+                item.icon
+              )}
+            </div>
+            <h3 className="text-lg md:text-[20px] font-semibold text-white">{item.title}</h3>
+            <p className="text-gray-400 text-sm mt-3 mb-4 md:mb-6 max-w-[300px] md:max-w-none">{item.desc}</p>
           </div>
-          <h3 className="text-[20px] font-semibold text-white">{item.title}</h3>
-          <p className="text-gray-400 font-sm text-sm mt-3 mb-6 w-84">{item.desc}</p>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

@@ -11,25 +11,29 @@ export default function Home() {
     <main className="bg-[linear-gradient(135deg,#03061B_0%,#0F1526_50%,#0F1A3D_100%)] text-white">
       <Header />
       {/* Hero Section */}
-      <section className="px-25 py-16 flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto">
-        <div className="max-w-xl space-y-6">
-          <h1 className="text-4xl md:text-6xl w-150 font-bold bg-gradient-to-r from-[#0054A8] via-[#0095F0] to-[#0054A8] bg-clip-text text-transparent">
-            Cuide da sua mente,
-            <br /> transforme sua vida.
+      {/* Hero Section */}
+      <section className="px-4 sm:px-6 md:px-8 lg:px-25 py-8 md:py-16 flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto">
+        <div className="w-full md:max-w-2xl space-y-4 md:space-y-6 text-center md:text-left">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-[#0054A8] via-[#0095F0] to-[#0054A8] bg-clip-text text-transparent">
+            Cuide da sua mente, transforme sua vida.
           </h1>
-          <p className="text-lg text-[#8E8999] w-120 ">
+          <p className="text-base sm:text-lg text-[#8E8999] max-w-[90%] md:max-w-none mx-auto md:mx-0">
             A MindTracking está aqui para ajudar você a entender e melhorar sua
             saúde mental.
           </p>
-          <button className="px-4 py-3 bg-[#3399FF] hover:bg-blue-700 rounded-full font-medium">
-            Comece sua jornada
-          </button>
+          <div className="flex justify-center md:justify-start">
+            <button className="px-6 py-3 bg-[#3399FF] hover:bg-blue-700 rounded-full font-medium transition-colors duration-200">
+              Comece sua jornada
+            </button>
+          </div>
         </div>
-        <img
-          src="../../public/images/hero.svg"
-          alt="Ilustração"
-          className="mt-12 md:mt-0 w-full md:w-[400px]"
-        />
+        <div className="w-full md:w-auto mt-8 md:mt-0 flex justify-center">
+          <img
+            src="../../public/images/hero.svg"
+            alt="Ilustração"
+            className="w-[280px] sm:w-[320px] md:w-[400px] h-auto"
+          />
+        </div>
       </section>
 
       {/* Mensagem de apoio */}
