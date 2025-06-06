@@ -27,11 +27,11 @@ const FeatureSection: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4">
-      <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-6 mt-10">
+      <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-6 mt-10 ">
         {features.map((item, idx) => (
           <div
             key={idx}
-            className="bg-[#131927] px-6 md:px-7.5 py-6 md:py-8 rounded-xl text-left shadow-md w-full md:flex-1"
+            className="bg-[#131927] px-6 md:px-7.5 py-6 md:py-8 rounded-xl text-left shadow-md w-full md:flex-1 transition-all duration-300 ease-in-out hover:transform hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/20"
           >
             <div className="text-3xl mb-4 md:mb-4.5">
               {item.icon.startsWith("/") ? (

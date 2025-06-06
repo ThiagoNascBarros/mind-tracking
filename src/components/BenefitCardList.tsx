@@ -32,11 +32,11 @@ const BenefitCardList: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-wrap gap-6 mt-16 max-w-6xl mx-auto">
+    <div className="flex flex-wrap gap-6 mt-16 max-w-6xl mx-auto ">
       {benefits.map((item, idx) => (
         <div
           key={idx}
-          className="bg-[#070B1F] border border-[#0D1E45] px-8 py-9 rounded-xl text-left flex items-center gap-4 basis-full md:basis-[calc(50%-0.75rem)]"
+          className="bg-[#070B1F] border border-[#0D1E45] px-8 py-9 rounded-xl text-left flex items-center gap-4 basis-full md:basis-[calc(50%-0.75rem)] transition-all duration-300 ease-in-out hover:transform hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/20"
         >
           <img src={item.icon} alt={item.title} className="w-13 h-13" />
           <div>

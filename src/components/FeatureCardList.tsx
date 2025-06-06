@@ -20,7 +20,7 @@ const features = [
 
 const FeatureCardList: React.FC = () => {
   const FeatureCard = ({ title, desc, icon }: { title: string; desc: string; icon: string }) => (
-    <div className="bg-[#161D2D] px-16 rounded-xl shadow-md text-center hover:shadow-lg transition">
+    <div className="bg-[#161D2D] px-16 rounded-xl shadow-md text-center transition transition-all duration-300 ease-in-out hover:transform hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/20">
       <div className="flex justify-center mb-8 mt-15">
         {icon.startsWith('/') ? (
           <img src={icon} alt={title} className="w-13.5 h-13.5" />
@@ -30,7 +30,7 @@ const FeatureCardList: React.FC = () => {
       </div>
       <h3 className="text-white text-[24px] font-semibold mb-4">{title}</h3>
       <p className="text-gray-400 text-sm mb-8">{desc}</p>
-      <button className="mb-14 px-4 py-2 text-sm border border-blue-500 text-blue-400 rounded-lg hover:bg-blue-500 hover:text-white transition">
+      <button className="mb-14 px-4 py-2 text-sm border border-blue-500 text-blue-400 rounded-lg hover:bg-blue-500 hover:text-white transition cursor-pointer">
         Saiba Mais →
       </button>
     </div>

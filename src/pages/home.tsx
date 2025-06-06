@@ -11,7 +11,6 @@ export default function Home() {
     <main className="bg-[linear-gradient(135deg,#03061B_0%,#0F1526_50%,#0F1A3D_100%)] text-white">
       <Header />
       {/* Hero Section */}
-      {/* Hero Section */}
       <section className="px-4 sm:px-6 md:px-8 lg:px-25 py-8 md:py-16 flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto">
         <div className="w-full md:max-w-2xl space-y-4 md:space-y-6 text-center md:text-left">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-[#0054A8] via-[#0095F0] to-[#0054A8] bg-clip-text text-transparent">
@@ -22,7 +21,7 @@ export default function Home() {
             saúde mental.
           </p>
           <div className="flex justify-center md:justify-start">
-            <button className="px-6 py-3 bg-[#3399FF] hover:bg-blue-700 rounded-full font-medium transition-colors duration-200">
+            <button className="px-6 py-3 bg-[#3399FF] hover:bg-blue-700 rounded-full font-medium transition-colors duration-200 cursor-pointer">
               Comece sua jornada
             </button>
           </div>
@@ -83,17 +82,21 @@ export default function Home() {
       </section>
 
       {/* CTA */}
-      <section className="px-6 py-20 text-center">
-        <div className="max-w-xl mx-auto">
-          <div className="text-5xl text-blue-400 mb-6">🧠</div>
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
+      <section className="px-4 sm:px-6 md:px-8 lg:px-12 py-12 sm:py-16 md:py-20 text-center">
+        <div className="max-w-3xl mx-auto">
+          <img 
+            src="public/images/Logo_azul.svg" 
+            alt="logo" 
+            className="mx-auto w-24 sm:w-24 md:w-32 pb-8 sm:pb-10 md:pb-14" 
+          />
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-4 sm:mb-5 px-4 sm:px-6 md:px-8 lg:px-0 max-w-[700px] mx-auto">
             Pronto(a) para Iniciar Sua Jornada Consciente?
           </h2>
-          <p className="text-gray-400 mb-6">
+          <p className="text-gray-400 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 px-4 sm:px-6 md:px-8 lg:px-0 max-w-2xl mx-auto">
             Dê o primeiro passo em direção a uma vida mais equilibrada e com
             mais autoconhecimento.
           </p>
-          <button className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-medium">
+          <button className="px-4 sm:px-6 py-2.5 sm:py-3 bg-[#3399FF] rounded-full font-medium text-sm sm:text-base hover:bg-blue-700">
             Quero Começar Agora
           </button>
         </div>

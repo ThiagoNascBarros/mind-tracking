@@ -103,8 +103,8 @@ export default function Header() {
             <div className="hidden lg:block">
                 <button
                     onClick={handleClick}
-                    className="bg-[#3399FF] text-white font-medium px-[24px] py-[10px] rounded-[24px] text-base align-text-bottom"
-                >
+                    className="px-[24px] py-[10px] text-white bg-[#3399FF] hover:bg-blue-700 rounded-[24px] font-medium transition-colors duration-200 cursor-pointer"
+                >               
                     Comece Agora
                 </button>
             </div>
