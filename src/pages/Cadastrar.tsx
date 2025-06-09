@@ -15,6 +15,8 @@ export default function Cadastrar() {
     dataNascimento: '',
   });
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,7 +76,7 @@ export default function Cadastrar() {
     e.preventDefault();
     if (validateRegister()) {
       console.log('Dados válidos:', formData);
-      navigate('/Login');
+      navigate('/sign-in');
     }
   };
 
@@ -84,29 +86,33 @@ export default function Cadastrar() {
     }`;
 
   return (
-    <div className="w-full h-screen flex items-center justify-center px-4 bg-gradient-to-r from-[#03061B] via-[#0F1526] to-[#0F1A3D] overflow-hidden">
-      <div className="flex flex-col md:flex-row w-full max-w-[1000px] h-full overflow-hidden">
-        <div className="hidden md:flex md:w-[60%] h-full py-4 items-center justify-center overflow-hidden">
-          <img
-            src={marImgCadastro}
-            alt="Imagem fundo oceano"
-            className="w-[80%] h-full object-contain rounded-2xl"
-          />
+    <div className="w-full h-screen flex items-center justify-center px-4 md:py-12 bg-[linear-gradient(to_bottom,_#0F1A3D_0%,_#0F1526_50%,_#03061B_100%)] overflow-hidden">
+      <div className="flex flex-col md:flex-row w-full max-w-[1000px] h-full overflow-hidden gap-[2em]">
+        <div className="hidden md:flex md:w-[60%] h-full rounded-4xl py-4 pr-24 items-center justify-center overflow-hidden bg-[url('/images/ImgSignUp.png')] bg-cover">
+          <div className='text-white flex flex-col pl-8 pb-10 mt-auto'>
+            <h1 className='font-semibold text-[2em]'>Junte-se a nós</h1>
+            <h3 className='font-semibold text-[1em] text-left'>Comece hoje sua jornada para uma mente mais saudável com nossas ferramentas especializadas.</h3>
+            <p className='font-semibold text-[0.9em]'>
+               ✓ Questionários personalizados<br/>
+               ✓ Acompahamento contínuo<br/>
+               ✓ Privacidade garantida
+            </p>
+          </div>
         </div>
 
         <div className="w-full md:w-[40%] h-full flex items-center justify-center p-4 md:p-8 text-white">
           <div className="w-full max-w-md space-y-4">
             <div className="flex flex-col items-center w-full">
               <img src={logoImg} alt="Logo" className="h-12 w-12 mb-2" />
-              <h2 className="mb-4 text-lg text-center font-semibold">
-                Crie sua conta no MindTracking
+              <h2 className="mb-4 text-lg text-center font-medium">
+                 Seja Bem-Vindo(a) ao MindTracking
               </h2>
 
               {/* Botões de alternância */}
-              <div className="flex bg-[#0F1A3D] p-1 rounded-full mb-6 w-full max-w-[300px]">
+              <div className="flex bg-[#142129] p-1 rounded-full mb-6 w-full max-w-[300px]">
                 <button
                   className="w-1/2 py-2 rounded-full text-sm font-medium text-white"
-                  onClick={() => navigate('/Login')}
+                  onClick={() => navigate('/sign-in')}
                 >
                   Entrar
                 </button>
@@ -129,7 +135,7 @@ export default function Cadastrar() {
                   className="w-full space-y-3"
                   noValidate
                 >
-                  <div>
+                  <div className="space-y-3">
                     <label
                       className="flex justify-between text-sm font-medium"
                       htmlFor="nomeCompleto"
@@ -142,13 +148,14 @@ export default function Cadastrar() {
                     <input
                       id="nomeCompleto"
                       type="text"
-                      className={inputClass('nomeCompleto')}
+                      className={`${inputClass('nomeCompleto')} placeholder:text-sm placeholder:text-gray-400 placeholder:font-light`}
                       value={formData.nomeCompleto}
                       onChange={handleInputChange}
+                      placeholder="Digite seu nome completo"
                     />
                   </div>
 
-                  <div>
+                  <div className="space-y-3">
                     <label className="flex justify-between text-sm font-medium" htmlFor="email">
                       Email
                       {errors.email && (
@@ -158,29 +165,49 @@ export default function Cadastrar() {
                     <input
                       id="email"
                       type="email"
-                      className={inputClass('email')}
+                      className={`${inputClass('email')} placeholder:text-sm placeholder:text-gray-400 placeholder:font-light`}
                       value={formData.email}
                       onChange={handleInputChange}
+                      placeholder="Digite seu email"
                     />
                   </div>
 
-                  <div>
+                  <div className="space-y-3">
                     <label className="flex justify-between text-sm font-medium" htmlFor="senha">
                       Senha
                       {errors.senha && (
                         <span className="text-red-500 text-xs">{errors.senha}</span>
                       )}
                     </label>
-                    <input
-                      id="senha"
-                      type="password"
-                      className={inputClass('senha')}
-                      value={formData.senha}
-                      onChange={handleInputChange}
-                    />
+                    <div className="relative">
+                      <input
+                        id="senha"
+                        type={showPassword ? "text" : "password"}
+                        className={`${inputClass('senha')} placeholder:text-sm placeholder:text-gray-400 placeholder:font-light pr-10`}
+                        value={formData.senha}
+                        onChange={handleInputChange}
+                        placeholder="Digite sua senha"
+                      />
+                      <button
+                        type="button"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? (
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+                          </svg>
+                        ) : (
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          </svg>
+                        )}
+                      </button>
+                    </div>
                   </div>
 
-                  <div>
+                  <div className="space-y-3">
                     <label
                       className="flex justify-between text-sm font-medium"
                       htmlFor="confirmarSenha"
@@ -190,16 +217,35 @@ export default function Cadastrar() {
                         <span className="text-red-500 text-xs">{errors.confirmarSenha}</span>
                       )}
                     </label>
-                    <input
-                      id="confirmarSenha"
-                      type="password"
-                      className={inputClass('confirmarSenha')}
-                      value={formData.confirmarSenha}
-                      onChange={handleInputChange}
-                    />
+                    <div className="relative">
+                      <input
+                        id="confirmarSenha"
+                        type={showConfirmPassword ? "text" : "password"}
+                        className={`${inputClass('confirmarSenha')} placeholder:text-sm placeholder:text-gray-400 placeholder:font-light pr-10`}
+                        value={formData.confirmarSenha}
+                        onChange={handleInputChange}
+                        placeholder="Confirme sua senha"
+                      />
+                      <button
+                        type="button"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      >
+                        {showConfirmPassword ? (
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+                          </svg>
+                        ) : (
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          </svg>
+                        )}
+                      </button>
+                    </div>
                   </div>
 
-                  <div>
+                  <div className="space-y-3">
                     <label
                       className="flex justify-between text-sm font-medium"
                       htmlFor="dataNascimento"
@@ -212,10 +258,11 @@ export default function Cadastrar() {
                     <input
                       id="dataNascimento"
                       type="date"
-                      className={inputClass('dataNascimento')}
+                      className={`${inputClass('dataNascimento')} placeholder:text-sm placeholder:text-gray-400 placeholder:font-light`}
                       value={formData.dataNascimento}
                       onChange={handleInputChange}
                       max={new Date().toISOString().split('T')[0]}
+                      placeholder="Selecione sua data de nascimento"
                     />
                   </div>
 

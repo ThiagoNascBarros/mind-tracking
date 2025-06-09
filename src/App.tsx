@@ -1,9 +1,11 @@
 import { Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
+import Home from './pages/home';
 import Questionarios from './pages/Questionarios';
 import Questionario from './pages/Questionario';
 import Dashboard from './pages/Dashboard';
 import Faq from './pages/Faq'
+import Login from './pages/Login';
+import Cadastrar from './pages/Cadastrar';
 
 function App() {
   return (
@@ -15,7 +17,8 @@ function App() {
         <Route path="/questionario-continuacao" element={<Questionario mostrarSaudacao={false} />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/faq" element={<Faq />} />
-        
+        <Route path="/sign-in" element={<Login />} />
+        <Route path="/sign-up" element={<Cadastrar />} />
       </Routes>
     </div>
   )

@@ -10,7 +10,7 @@ export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const handleClick = () => {
-        navigate("/login");
+        navigate("/sign-in");
     }
 
     const toggleMenu = () => {

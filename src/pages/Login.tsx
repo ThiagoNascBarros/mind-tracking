@@ -64,7 +64,7 @@ export default function Login() {
                 </button>
                 <button
                   className="w-1/2 py-2 rounded-full text-sm font-medium text-white"
-                  onClick={() => navigate('/Cadastrar')}
+                  onClick={() => navigate('/sign-up')}
                 >
                   Cadastrar
                 </button>
