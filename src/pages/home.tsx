@@ -28,7 +28,7 @@ export default function Home() {
         </div>
         <div className="w-full md:w-auto mt-8 md:mt-0 flex justify-center">
           <img
-            src="../../public/images/hero.svg"
+            src="/images/hero.svg"
             alt="Ilustração"
             className="w-[280px] sm:w-[320px] md:w-[400px] h-auto"
           />
@@ -84,19 +84,20 @@ export default function Home() {
       {/* CTA */}
       <section className="px-4 sm:px-6 md:px-8 lg:px-12 py-12 sm:py-16 md:py-20 text-center">
         <div className="max-w-3xl mx-auto">
-          <img 
-            src="public/images/Logo_azul.svg" 
-            alt="logo" 
-            className="mx-auto w-24 sm:w-24 md:w-32 pb-8 sm:pb-10 md:pb-14" 
+          <img
+            src="/images/Logo_azul.svg"
+            alt="logo"
+            className="mx-auto w-24 sm:w-24 md:w-32 pb-8 sm:pb-10 md:pb-14"
           />
-          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-4 sm:mb-5 px-4 sm:px-6 md:px-8 lg:px-0 max-w-[700px] mx-auto">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-4 sm:mb-5 px-4 sm:px-6 md:px-8 lg:px-0 max-w-[800px] mx-auto">
             Pronto(a) para Iniciar Sua Jornada Consciente?
           </h2>
-          <p className="text-gray-400 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 px-4 sm:px-6 md:px-8 lg:px-0 max-w-2xl mx-auto">
+          <p className="text-gray-400 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 px-4 sm:px-6 md:px-8 lg:px-13 max-w-2xl mx-auto">
             Dê o primeiro passo em direção a uma vida mais equilibrada e com
-            mais autoconhecimento.
+            mais autoconhecimento. O cuidado com sua mente é um investimento
+            valioso.
           </p>
-          <button className="px-4 sm:px-6 py-2.5 sm:py-3 bg-[#3399FF] rounded-full font-medium text-sm sm:text-base hover:bg-blue-700">
+          <button className="px-4 sm:px-6 py-2.5 sm:py-3 bg-[#3399FF] rounded-full font-medium text-sm sm:text-base hover:bg-blue-700 cursor-pointer">
             Quero Começar Agora
           </button>
         </div>

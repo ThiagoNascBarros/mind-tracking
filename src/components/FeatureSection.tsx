@@ -26,22 +26,22 @@ const FeatureSection: React.FC = () => {
   ];
 
   return (
-    <div className="container mx-auto px-4">
-      <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-6 mt-10 ">
+    <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+      <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 sm:gap-5 md:gap-6 mt-8 sm:mt-10">
         {features.map((item, idx) => (
           <div
             key={idx}
-            className="bg-[#131927] px-6 md:px-7.5 py-6 md:py-8 rounded-xl text-left shadow-md w-full md:flex-1 transition-all duration-300 ease-in-out hover:transform hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/20"
+            className="bg-[#131927] px-5 sm:px-6 md:px-7.5 py-5 sm:py-6 md:py-8 rounded-xl text-left shadow-md w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)] transition-all duration-300 ease-in-out hover:transform hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/20"
           >
-            <div className="text-3xl mb-4 md:mb-4.5">
+            <div className="text-3xl mb-3 sm:mb-4 md:mb-4.5">
               {item.icon.startsWith("/") ? (
-                <img src={item.icon} alt={item.title} className="w-8 h-8" />
+                <img src={item.icon} alt={item.title} className="w-7 h-7 sm:w-8 sm:h-8" />
               ) : (
                 item.icon
               )}
             </div>
-            <h3 className="text-lg md:text-[20px] font-semibold text-white">{item.title}</h3>
-            <p className="text-gray-400 text-sm mt-3 mb-4 md:mb-6 max-w-[300px] md:max-w-none">{item.desc}</p>
+            <h3 className="text-base sm:text-lg md:text-[20px] font-semibold text-white leading-tight">{item.title}</h3>
+            <p className="text-gray-400 text-sm sm:text-base mt-2 sm:mt-3 mb-3 sm:mb-4 md:mb-6 leading-relaxed">{item.desc}</p>
           </div>
         ))}
       </div>

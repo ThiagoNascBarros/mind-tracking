@@ -20,26 +20,28 @@ const features = [
 
 const FeatureCardList: React.FC = () => {
   const FeatureCard = ({ title, desc, icon }: { title: string; desc: string; icon: string }) => (
-    <div className="bg-[#161D2D] px-16 rounded-xl shadow-md text-center transition transition-all duration-300 ease-in-out hover:transform hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/20">
-      <div className="flex justify-center mb-8 mt-15">
+    <div className="bg-[#161D2D] px-6 sm:px-8 md:px-12 lg:px-16 py-8 sm:py-10 md:py-12 rounded-xl shadow-md text-center transition-all duration-300 ease-in-out hover:transform hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/20">
+      <div className="flex justify-center mb-6 sm:mb-7 md:mb-8">
         {icon.startsWith('/') ? (
-          <img src={icon} alt={title} className="w-13.5 h-13.5" />
+          <img src={icon} alt={title} className="w-10 h-10 sm:w-12 sm:h-12 md:w-13.5 md:h-13.5" />
         ) : (
-          <span className="text-4xl text-blue-400">{icon}</span>
+          <span className="text-3xl sm:text-4xl text-blue-400">{icon}</span>
         )}
       </div>
-      <h3 className="text-white text-[24px] font-semibold mb-4">{title}</h3>
-      <p className="text-gray-400 text-sm mb-8">{desc}</p>
-      <button className="mb-14 px-4 py-2 text-sm border border-blue-500 text-blue-400 rounded-lg hover:bg-blue-500 hover:text-white transition cursor-pointer">
+      <h3 className="text-white text-lg sm:text-xl md:text-[24px] font-semibold mb-3 sm:mb-4 leading-tight">{title}</h3>
+      <p className="text-gray-400 text-sm sm:text-base mb-6 sm:mb-7 md:mb-8 leading-relaxed">{desc}</p>
+      <button className="mb-8 sm:mb-10 md:mb-14 px-3 sm:px-4 py-2 text-sm sm:text-base border border-blue-500 text-blue-400 rounded-lg hover:bg-blue-500 hover:text-white transition cursor-pointer">
         Saiba Mais →
       </button>
     </div>
   );
 
   return (
-    <div className="grid md:grid-cols-3 gap-5.5 mt-12.5">
+    <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 sm:gap-5 md:gap-5.5 mt-8 sm:mt-10 md:mt-12.5">
       {features.map((item, idx) => (
-        <FeatureCard key={idx} {...item} />
+        <div key={idx} className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)]">
+          <FeatureCard {...item} />
+        </div>
       ))}
     </div>
   );
