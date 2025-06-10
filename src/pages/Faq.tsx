@@ -2,11 +2,11 @@
 import React, { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer/Footer";
-import FaqItem from "../components/FaqItem";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Faq {
   question: string;
-  answer: string;
+  answer: string; 
 }
 
 const faqData: Faq[] = [
@@ -50,31 +50,144 @@ const FaqPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0A0F23] text-white">
-      <Header />
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0A0F23] to-[#1a1f3d] text-white">
+      <div className="z-50">
+        <Header />
+      </div>
       <main className="flex-1 px-4 sm:px-6 md:px-12 lg:px-24 py-8 md:py-12 lg:py-16">
         <div className="max-w-4xl mx-auto">
           {/* Cabeçalho */}
-          <div className="text-center mb-8 md:mb-12 lg:mb-16">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4 text-white">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-6 md:mb-16 lg:mb-20"
+          >
+            <h1 className="text-2xl sm:text-2xl md:text-5xl font-bold mb-4 text-white">
               Perguntas Frequentes (FAQ)
             </h1>
             <p className="text-sm sm:text-base md:text-lg text-gray-400 max-w-2xl mx-auto">
               Encontre respostas para as dúvidas mais comuns sobre o
               MindTracking
             </p>
-          </div>
+          </motion.div>
 
           {/* Lista de FAQs */}
-          <div className="space-y-3 sm:space-y-4 md:space-y-5">
+          <div className="space-y-5">
             {faqData.map((faq, index) => (
-              <FaqItem
+              <motion.div
                 key={index}
-                question={faq.question}
-                answer={faq.answer}
-                isOpen={openIndex === index}
-                onClick={() => toggleOpen(index)}
-              />
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className={`group relative overflow-hidden rounded-xl bg-white/5 border border-white/10 transition-all ${
+                  openIndex === index ? 'scale-[1.02] shadow-lg shadow-white/10 border-white/20' : ''
+                }`} // Removido backdrop-blur-sm e shadow-[#0F1526]
+                whileHover={{ scale: openIndex === index ? 1.02 : 1.01 }}
+              >
+                <motion.div
+                  onClick={() => toggleOpen(index)}
+                  className="p-6 cursor-pointer flex justify-between items-center"
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <h3 className="text-left md:text-lg w-56 md:w-auto font-medium md:font-semibold text-white transition-colors duration-300">
+                    {faq.question}
+                  </h3>
+                  <motion.div 
+                    className={`transform transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ''}`}
+                    animate={{ rotate: openIndex === index ? 180 : 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                  >
+                    <svg
+                      className="w-6 h-6 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </motion.div>
+                </motion.div>
+                <AnimatePresence initial={false}>
+                  {openIndex === index && (
+                    <motion.div
+                      initial="collapsed"
+                      animate="expanded"
+                      exit="collapsed"
+                      variants={{
+                        expanded: {
+                          height: "auto",
+                          opacity: 1,
+                          transition: {
+                            height: {
+                              duration: 0.4,
+                              ease: [0.04, 0.62, 0.23, 0.98]
+                            },
+                            opacity: {
+                              duration: 0.25,
+                              delay: 0.15
+                            }
+                          }
+                        },
+                        collapsed: {
+                          height: 0,
+                          opacity: 0,
+                          transition: {
+                            height: {
+                              duration: 0.3,
+                              ease: [0.04, 0.62, 0.23, 0.98]
+                            },
+                            opacity: {
+                              duration: 0.2
+                            }
+                          }
+                        }
+                      }}
+                      className="overflow-hidden"
+                    >
+                      <motion.div 
+                        variants={{
+                          expanded: {
+                            y: 0,
+                            opacity: 1,
+                            transition: {
+                              y: {
+                                duration: 0.3,
+                                ease: [0.04, 0.62, 0.23, 0.98]
+                              },
+                              opacity: {
+                                duration: 0.25,
+                                delay: 0.15
+                              }
+                            }
+                          },
+                          collapsed: {
+                            y: -20,
+                            opacity: 0,
+                            transition: {
+                              y: {
+                                duration: 0.2,
+                                ease: [0.04, 0.62, 0.23, 0.98]
+                              },
+                              opacity: {
+                                duration: 0.15
+                              }
+                            }
+                          }
+                        }}
+                        className="px-6 pb-6 text-gray-300"
+                      >
+                        <p className="leading-relaxed">{faq.answer}</p>
+                      </motion.div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
             ))}
           </div>
         </div>
