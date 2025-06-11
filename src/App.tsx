@@ -1,11 +1,13 @@
 import { Routes, Route } from 'react-router-dom';
-import Home from './pages/home';
+import Home from './pages/Home';
 import Questionarios from './pages/Questionarios';
 import Questionario from './pages/Questionario';
 import Dashboard from './pages/Dashboard';
 import Faq from './pages/Faq'
 import Login from './pages/Login';
 import Cadastrar from './pages/Cadastrar';
+import Mind from './pages/Mind-ia'
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -16,9 +18,11 @@ function App() {
         <Route path="/questionario" element={<Questionario mostrarSaudacao={true} />} />
         <Route path="/questionario-continuacao" element={<Questionario mostrarSaudacao={false} />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/faq" element={<Faq />} />
+        <Route path="/faq" element={<Faq />} /> 
         <Route path="/sign-in" element={<Login />} />
         <Route path="/sign-up" element={<Cadastrar />} />
+        <Route path="/mind-ai" element={<Mind />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   )

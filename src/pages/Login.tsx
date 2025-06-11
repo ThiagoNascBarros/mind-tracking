@@ -1,5 +1,3 @@
-
-
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -42,7 +40,7 @@ export default function Login() {
   return (
     <div className="w-full h-screen flex items-center justify-center px-4 md:py-8 bg-[linear-gradient(to_bottom,_#0F1A3D_0%,_#0F1526_50%,_#03061B_100%)] overflow-hidden">
       <div className="flex flex-col md:flex-row w-full max-w-[1000px] h-full overfloidden gap-[2em]">
-        <div className="hidden md:flex w-[60%] h-full rounded-4xl py-4 pr-24 items-center justify-center overflow-hidden bg-[url('/images/ImgSign.png')] bg-cover">
+        <div className="hidden md:flex w-[60%] h-full rounded-4xl py-4 pr-24 items-center justify-center overflow-hidden bg-[url('/images/ImgSignUp.png')] bg-cover">
           <div className='text-white flex flex-col pl-8 pb-10 mt-auto'>
             <h3 className='font-semibold text-[1.150em] text-left'>Continue sua jornada de autocuidado e acompanhe seu progresso na MindTracking.</h3>
             <p className='font-semibold text-[0.9em]'>
@@ -52,7 +50,7 @@ export default function Login() {
             </p>
           </div>
         </div>
-        <div className="w-full md:w-[40%] h-full flex items-center justify-center p-4 md:p-8 text-white">
+        <div className="w-full md:max-w-[400px] md:w-full h-full flex items-center justify-center p-4 md:p-8 text-white">
           <div className="w-full max-w-md space-y-4">
             <div className="flex flex-col items-center w-full ">
               <img src={logoImg} alt="Logo" className="h-12 w-12 mb-2" />
@@ -148,7 +146,7 @@ export default function Login() {
                   <div className="flex justify-end mt-2">
                     <button
                       type="button"
-                      className="text-white text-sm hover:text-gray-300 transition font-roboto font-bold"
+                      className="text-white text-sm hover:text-gray-300 transition font-roboto font-bold cursor-pointer"
                       onClick={() => {/* ação de recuperação de senha */}}
                     >
                       Esqueceu sua senha?
