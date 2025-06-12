@@ -1,10 +1,54 @@
-import Header from "../components/Header";
+import { useEffect, useState } from "react";
+import Header from "../components/Header/Header";
 import Card from "../components/CardQuestionario/Card";
 import IconQuestionario from "/Assets/IconQuestionarioDiario.svg";
 import IconProgresso from "/Assets/IconProgressoSemanal.svg";
 import Footer from "../components/Footer/Footer";
 
+async function verificarQuestionarioDiario(userId: string, token: string): Promise<boolean> {
+    try {
+        const response = await fetch(`http://localhost:3000/questionario/verificar/${userId}`, {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error('Erro ao verificar questionário');
+        }
+
+        const data = await response.json();
+        return data.podeResponder;
+    } catch (error) {
+        console.error('Erro ao verificar questionário:', error);
+        return false;
+    }
+}
+
 export default function Questionarios() {
+    const [podeResponder, setPodeResponder] = useState<boolean>(true);
+    const [mensagem, setMensagem] = useState<string>("");
+
+    useEffect(() => {
+        const verificarQuestionario = async () => {
+            const token = sessionStorage.getItem('token');
+            const user = JSON.parse(sessionStorage.getItem('user') || "null");
+
+            if (!token || !user) {
+                setPodeResponder(false);
+                setMensagem('Faça login para responder o questionário diário.');
+                return;
+            }
+
+            const podeResponder = await verificarQuestionarioDiario(user.id, token);
+            setPodeResponder(podeResponder);
+            setMensagem(podeResponder ? "" : 'Você já respondeu o questionário diário hoje.');
+        };
+
+        verificarQuestionario();
+    }, []);
+
     return (
         <div className="min-h-screen bg-gradient-to-bl from-[#03061B] via-[#0F1526] to-[#0F1A3D]">
             <Header />
@@ -28,6 +72,8 @@ export default function Questionarios() {
                             textButton="Iniciar Questionário"
                             bgButton="bg-[#3399FF] hover:bg-[#2980e9] transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/30"
                             navigationLink="/questionario"
+                            disabled={!podeResponder}
+                            mensagem={mensagem}
                         />  
                     </div>
                     <div className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(50%-1.5rem)] group">

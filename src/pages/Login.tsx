@@ -11,7 +11,8 @@ export default function Login() {
     senha: '',
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [showPassword, setShowPassword] = useState(false); // Novo estado
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
@@ -26,10 +27,42 @@ export default function Login() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateLogin()) return;
-    alert('Login realizado com sucesso!');
+
+    setIsLoading(true);
+    try {
+      const response = await fetch("http://localhost:3000/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        sessionStorage.setItem("token", data.token);
+        sessionStorage.setItem("user", JSON.stringify(data.user));
+        
+        if (data.redirect) {
+          navigate(data.redirect);
+        } else if (data.user.questionario_inicial) {
+          navigate('/dashboard');
+        } else {
+          navigate('/questionario');
+        }
+      } else {
+        setErrors({ submit: data.message || 'Erro ao fazer login' });
+      }
+    } catch (error) {
+      console.error("Erro no login:", error);
+      setErrors({ submit: 'Erro ao conectar-se ao servidor. Verifique sua conexão.' });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const inputClass = (field: string) =>
@@ -154,11 +187,17 @@ export default function Login() {
                   </div>
 
                   <div className="flex justify-end mt-4">
+                    {errors.submit && (
+                      <div className="text-red-500 text-sm mb-2 w-full text-center">
+                        {errors.submit}
+                      </div>
+                    )}
                     <button
                       type="submit"
-                     className="w-1/2 max-w-[300px] h-[36px] bg-[#3399FF] cursor-pointer text-white text-sm rounded-full hover:bg-[#2688e3] transition font-roboto font-bold"
+                      disabled={isLoading}
+                      className="w-1/2 max-w-[300px] h-[36px] bg-[#3399FF] cursor-pointer text-white text-sm rounded-full hover:bg-[#2688e3] transition font-roboto font-bold disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Entrar
+                      {isLoading ? 'Entrando...' : 'Entrar'}
                     </button>
                   </div>
                 </motion.form>

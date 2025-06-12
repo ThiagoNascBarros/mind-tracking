@@ -1,8 +1,9 @@
 // src/pages/FaqPage.tsx
-import React, { useState } from "react";
-import Header from "../components/Header";
+import React, { useState, useEffect } from "react";
+import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLocation } from "react-router-dom";
 
 interface Faq {
   question: string;
@@ -14,6 +15,16 @@ const faqData: Faq[] = [
     question: "O que é o MindTracking?",
     answer:
       "O MindTracking é uma plataforma de saúde mental que permite aos usuários responder questionários diários sobre seu humor e bem-estar. Nossa ferramenta ajuda você a monitorar seu estado emocional, identificar padrões e receber insights personalizados para melhorar sua saúde mental.",
+  },
+  {
+    question: "Como funcionam os questionários?",
+    answer:
+      "Nossos questionários são projetados para serem rápidos e intuitivos. Você responde perguntas sobre seu humor, sono, níveis de estresse e outras métricas importantes. As respostas são registradas diariamente, permitindo um acompanhamento consistente do seu bem-estar.",
+  },
+  {
+    question: "Como funciona o Mind IA?",
+    answer:
+      "O Mind IA é um assistente virtual que utiliza inteligência artificial para oferecer suporte emocional e dicas personalizadas. Ele analisa seus padrões de resposta e oferece insights relevantes para ajudar no seu desenvolvimento pessoal.",
   },
   {
     question: "Como funcionam os gráficos semanais?",
@@ -44,6 +55,21 @@ const faqData: Faq[] = [
 
 const FaqPage: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    // Verifica se há um activeTab no estado da navegação
+    const activeTab = location.state?.activeTab;
+    if (activeTab) {
+      // Encontra o índice da FAQ correspondente ao activeTab
+      const index = faqData.findIndex(faq => 
+        faq.question.toLowerCase().includes(activeTab.replace('/', '').toLowerCase())
+      );
+      if (index !== -1) {
+        setOpenIndex(index);
+      }
+    }
+  }, [location]);
 
   const toggleOpen = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -52,7 +78,7 @@ const FaqPage: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0A0F23] to-[#1a1f3d] text-white">
       <div className="z-50">
-        <Header />
+        <Header isFaqPage={true} />
       </div>
       <main className="flex-1 px-4 sm:px-6 md:px-12 lg:px-24 py-8 md:py-12 lg:py-16">
         <div className="max-w-4xl mx-auto">
@@ -82,7 +108,7 @@ const FaqPage: React.FC = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className={`group relative overflow-hidden rounded-xl bg-white/5 border border-white/10 transition-all ${
                   openIndex === index ? 'scale-[1.02] shadow-lg shadow-white/10 border-white/20' : ''
-                }`} // Removido backdrop-blur-sm e shadow-[#0F1526]
+                }`}
                 whileHover={{ scale: openIndex === index ? 1.02 : 1.01 }}
               >
                 <motion.div
@@ -192,7 +218,7 @@ const FaqPage: React.FC = () => {
           </div>
         </div>
       </main>
-      <Footer />
+      <Footer isFaqPage={true} />
     </div>
   );
 };

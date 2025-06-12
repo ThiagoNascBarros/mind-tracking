@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const features = [
   {
@@ -30,9 +31,11 @@ const FeatureCardList: React.FC = () => {
       </div>
       <h3 className="text-white text-lg sm:text-xl md:text-[24px] font-semibold mb-3 sm:mb-4 leading-tight">{title}</h3>
       <p className="text-gray-400 text-sm sm:text-base mb-6 sm:mb-7 md:mb-8 leading-relaxed">{desc}</p>
+      <NavLink to="/faq">
       <button className="mb-8 sm:mb-10 md:mb-14 px-3 sm:px-4 py-2 text-sm sm:text-base border border-blue-500 text-blue-400 rounded-lg hover:bg-blue-500 hover:text-white transition cursor-pointer">
         Saiba Mais →
       </button>
+      </NavLink>
     </div>
   );
 

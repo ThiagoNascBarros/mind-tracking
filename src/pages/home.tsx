@@ -1,15 +1,16 @@
 // src/pages/Home.jsx
 import React from "react";
-import FeatureSection from "../components/FeatureSection";
-import Header from "../components/Header";
+import { Link } from "react-router-dom";
+import FeatureSection from "../components/Home/FeatureSection";
+import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
-import FeatureCardList from "../components/FeatureCardList";
-import BenefitCardList from "../components/BenefitCardList";
+import FeatureCardList from "../components/Home/FeatureCardList";
+import BenefitCardList from "../components/Home/BenefitCardList";
 
 export default function Home() {
   return (
     <main className="bg-[linear-gradient(135deg,#03061B_0%,#0F1526_50%,#0F1A3D_100%)] text-white">
-      <Header />
+      <Header isHomePage={true} />
       {/* Hero Section */}
       <section className="px-4 sm:px-6 md:px-8 lg:px-25 py-8 md:py-16 flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto">
         <div className="w-full md:max-w-2xl space-y-4 md:space-y-6 text-center md:text-left">
@@ -21,9 +22,11 @@ export default function Home() {
             saúde mental.
           </p>
           <div className="flex justify-center md:justify-start">
+            <Link to="/sign-in">
             <button className="px-6 py-3 bg-[#3399FF] hover:bg-blue-700 rounded-full font-medium transition-colors duration-200 cursor-pointer">
               Comece sua jornada
             </button>
+            </Link>
           </div>
         </div>
         <div className="w-full md:w-auto mt-8 md:mt-0 flex justify-center">
@@ -97,14 +100,16 @@ export default function Home() {
             mais autoconhecimento. O cuidado com sua mente é um investimento
             valioso.
           </p>
+          <Link to="/sign-in">
           <button className="px-4 sm:px-6 py-2.5 sm:py-3 bg-[#3399FF] rounded-full font-medium text-sm sm:text-base hover:bg-blue-700 cursor-pointer">
             Quero Começar Agora
           </button>
+          </Link>
         </div>
       </section>
 
       {/* Footer */}
-      <Footer />
+      <Footer isHomePage={true} />
     </main>
   );
 }

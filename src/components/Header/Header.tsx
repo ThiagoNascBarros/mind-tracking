@@ -1,21 +1,41 @@
-import Logo from "./Logo.svg";
-import { NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import Logo from "/images/Logo.svg";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function Header() {
+// No início do arquivo
+interface HeaderProps {
+    isHomePage?: boolean;
+    isFaqPage?: boolean;
+}
+export default function Header({ isHomePage = false, isFaqPage = false }: HeaderProps) {
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const handleClick = () => {
-        navigate("/sign-in");
-    }
-
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
-    }
+    };
+
+    const handleClick = () => {
+        navigate('/sign-in');
+    };
+
+    const handleNavigation = (path: string, label?: string) => {
+        if (isFaqPage) {
+            if (label?.toLowerCase() === 'inicio') {
+                navigate('/');
+            } else if (label?.toLowerCase() === 'faq') {
+                navigate('/faq');
+            } else {
+                navigate('/sign-in');
+            }
+        } else if (isHomePage && ['/questionarios', '/mind-ai', '/dashboard'].includes(path)) {
+            navigate('/faq');
+        } else {
+            navigate(path);
+        }
+    };
 
     const menuVariants = {
         closed: {
@@ -62,39 +82,39 @@ export default function Header() {
             <nav className="hidden lg:block">
                 <ul className="flex gap-16">
                     <li>
-                        <NavLink 
-                            to="/"
-                            className={navLinkClass}
+                        <button 
+                            onClick={() => handleNavigation('/', 'Inicio')}
+                            className={navLinkClass({ isActive: false })}
                         >
                             Inicio
-                        </NavLink>
+                        </button>
                     </li>
                     
                     <li>
-                        <NavLink 
-                            to="/questionarios"
-                            className={navLinkClass}
+                        <button 
+                            onClick={() => handleNavigation('/questionarios', 'Questionários')}
+                            className={navLinkClass({ isActive: false })}
                         >
                             Questionários
-                        </NavLink>
+                        </button>
                     </li>
                     
                     <li>
-                        <NavLink
-                            to="/mind-ai"
-                            className={navLinkClass}
+                        <button 
+                            onClick={() => handleNavigation('/mind-ai', 'Mind AI')}
+                            className={navLinkClass({ isActive: false })}
                         >
                             Mind AI
-                        </NavLink>
+                        </button>
                     </li>
                     
                     <li>
-                        <NavLink 
-                            to="/dashboard"
-                            className={navLinkClass}
+                        <button 
+                            onClick={() => handleNavigation('/dashboard', 'Dashboard')}
+                            className={navLinkClass({ isActive: false })}
                         >
                             Dashboard
-                        </NavLink>
+                        </button>
                     </li>
                 </ul>
             </nav>
@@ -148,52 +168,60 @@ export default function Header() {
                                 variants={menuItemVariants}
                                 transition={{ delay: 0.1 }}
                             >
-                                <NavLink 
-                                    to="/"
-                                    className={navLinkClass}
-                                    onClick={toggleMenu}
+                                <button 
+                                    onClick={() => {
+                                        handleNavigation('/', 'Inicio');
+                                        toggleMenu();
+                                    }}
+                                    className={navLinkClass({ isActive: false })}
                                 >
                                     Inicio
-                                </NavLink>
+                                </button>
                             </motion.li>
                             
                             <motion.li
                                 variants={menuItemVariants}
                                 transition={{ delay: 0.2 }}
                             >
-                                <NavLink 
-                                    to="/questionarios"
-                                    className={navLinkClass}
-                                    onClick={toggleMenu}
+                                <button 
+                                    onClick={() => {
+                                        handleNavigation('/questionarios', 'Questionários');
+                                        toggleMenu();
+                                    }}
+                                    className={navLinkClass({ isActive: false })}
                                 >
                                     Questionários
-                                </NavLink>
+                                </button>
                             </motion.li>
                             
                             <motion.li
                                 variants={menuItemVariants}
                                 transition={{ delay: 0.3 }}
                             >
-                                <NavLink
-                                    to="/mind-ai"
-                                    className={navLinkClass}
-                                    onClick={toggleMenu}
+                                <button 
+                                    onClick={() => {
+                                        handleNavigation('/mind-ai', 'Mind AI');
+                                        toggleMenu();
+                                    }}
+                                    className={navLinkClass({ isActive: false })}
                                 >
                                     Mind AI
-                                </NavLink>
+                                </button>
                             </motion.li>
                             
                             <motion.li
                                 variants={menuItemVariants}
                                 transition={{ delay: 0.4 }}
                             >
-                                <NavLink 
-                                    to="/dashboard"
-                                    className={navLinkClass}
-                                    onClick={toggleMenu}
+                                <button 
+                                    onClick={() => {
+                                        handleNavigation('/dashboard', 'Dashboard');
+                                        toggleMenu();
+                                    }}
+                                    className={navLinkClass({ isActive: false })}
                                 >
                                     Dashboard
-                                </NavLink>
+                                </button>
                             </motion.li>
 
                             <motion.li

@@ -1,7 +1,7 @@
 // src/pages/AthenaChatPage.tsx
 import React, { useState } from "react";
 import { Send } from "lucide-react";
-import Header from "../components/Header";
+import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 
 interface Message {
@@ -20,21 +20,42 @@ const AthenaChatPage: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
 
-  const sendMessage = (text: string) => {
+  const sendMessage = async (text: string) => {
     if (!text.trim()) return;
 
-    const newMessages = [...messages, { sender: "user", content: text }];
+    const newMessages = [...messages, { sender: "user" as const, content: text }];
     setMessages(newMessages);
     setInput("");
 
-    setTimeout(() => {
+    try {
+      const token = sessionStorage.getItem('token');
+      const response = await fetch('http://localhost:3000/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ message: text })
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao conectar à API');
+      }
+
+      const data = await response.json();
       const botReply = {
-        sender: "bot",
-        content:
-          "Entendo. A ansiedade pode ser difícil de lidar. Você gostaria de algumas técnicas de respiração?",
+        sender: "bot" as const,
+        content: data.response || "Desculpe, houve um erro ao processar sua mensagem."
       };
       setMessages([...newMessages, botReply]);
-    }, 800);
+    } catch (error) {
+      console.error('Erro ao enviar mensagem:', error);
+      const errorMessage = {
+        sender: "bot" as const,
+        content: "Erro ao conectar com o servidor. Tente novamente mais tarde."
+      };
+      setMessages([...newMessages, errorMessage]);
+    }
   };
 
   return (

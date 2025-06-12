@@ -1,4 +1,4 @@
-import Questionario from "../components/PageQuestionario";
+import Questionario from "../components/Questionarios/PageQuestionario";
 
 interface QuestionarioPageProps {
   mostrarSaudacao?: boolean;

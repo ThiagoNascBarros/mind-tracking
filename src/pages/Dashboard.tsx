@@ -1,24 +1,153 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import Header from '../components/Header';
+import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
+interface Questionario {
+  data: string;
+  nota_convertida: number;
+  tipo?: string;
+}
+
 function Dashboard() {
-  const data = {
-    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-    datasets: [
-      {
-        label: 'Avaliação de Humor Diária',
-        data: [6, 7.5, 5, 8, 6, 7, 9],
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
-        tension: 0.4,
-      },
-    ],
-  };
+  const [score, setScore] = useState<string>("Carregando pontuação...");
+  const [tip, setTip] = useState<string>("Carregando dica...");
+  const [chartData, setChartData] = useState({
+    labels: [] as string[],
+    datasets: [{
+      label: 'Avaliação de Humor Diária',
+      data: [] as number[],
+      borderColor: 'rgb(53, 162, 235)',
+      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      tension: 0.4,
+    }]
+  });
+
+  useEffect(() => {
+    const carregarPontuacao = async () => {
+      const token = sessionStorage.getItem("token");
+      const user = JSON.parse(sessionStorage.getItem("user") || "null");
+
+      if (!user || !token) {
+        setScore("Faça login para ver sua pontuação");
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:3000/questionario/pontuacao/${user.id}`, {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        });
+
+        if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
+
+        const data = await response.json();
+        if (data.success) {
+          setScore(`Sua nota: ${data.nota} / 10 - Nível: ${data.nivel}`);
+        } else {
+          console.error("Erro ao buscar pontuação:", data.message);
+          setScore("Erro ao carregar pontuação");
+        }
+
+      } catch (error) {
+        console.error("Erro ao carregar pontuação:", error);
+        setScore("Erro ao carregar pontuação");
+      }
+    };
+
+    const gerarDica = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/dica', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Erro ao buscar a dica: ' + response.statusText);
+        }
+
+        const data = await response.json();
+        setTip(data.dica);
+      } catch (error) {
+        console.error('Erro ao gerar dica:', error);
+        setTip('Erro ao gerar dica. Tente novamente mais tarde.');
+      }
+    };
+
+    const carregarHistoricoQuestionarios = async () => {
+      const user = JSON.parse(sessionStorage.getItem("user") || "null");
+      const token = sessionStorage.getItem("token");
+
+      if (!user || !token) {
+        console.error('Usuário não encontrado no sessionStorage.');
+        return;
+      }
+
+      try {
+        const res = await fetch(`http://localhost:3000/questionario/historico/${user.id}`, {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        });
+
+        if (!res.ok) {
+          throw new Error(`Erro na requisição: ${res.status}`);
+        }
+
+        const response = await res.json();
+
+        if (!response.success) {
+          throw new Error(response.message || 'Erro ao carregar questionários');
+        }
+
+        const questionarios = response.historico as Questionario[];
+        if (!questionarios || questionarios.length === 0) {
+          return;
+        }
+
+        // Ordenar questionários por data
+        const questionariosOrdenados = questionarios.sort((a: Questionario, b: Questionario) => 
+          new Date(a.data).getTime() - new Date(b.data).getTime()
+        );
+
+        // Pegar os últimos 7 questionários
+        const ultimosQuestionarios = questionariosOrdenados.slice(-7);
+
+        // Preparar dados para o gráfico
+        const labels = ultimosQuestionarios.map((q: Questionario) => 
+          new Date(q.data).toLocaleDateString('pt-BR', { weekday: 'short' })
+        );
+        const dados = ultimosQuestionarios.map((q: Questionario) => q.nota_convertida);
+
+        setChartData({
+          labels: labels,
+          datasets: [{
+            label: 'Avaliação de Humor Diária',
+            data: dados,
+            borderColor: 'rgb(53, 162, 235)',
+            backgroundColor: 'rgba(53, 162, 235, 0.5)',
+            tension: 0.4,
+          }]
+        });
+
+      } catch (err) {
+        console.error('Erro ao carregar questionários:', err);
+      }
+    };
+
+    carregarPontuacao();
+    gerarDica();
+    carregarHistoricoQuestionarios();
+  }, []);
 
   const options = {
     responsive: true,
@@ -71,7 +200,7 @@ function Dashboard() {
 
             {/* Chart area */}
             <div className="flex-grow">
-              <Line data={data} options={options} />
+              <Line data={chartData} options={options} />
             </div>
           </div>
           <div className="p-4 md:p-6 lg:p-12 bg-[#161D2D] border-2 border-[#ffffff20] rounded-lg mt-5">
@@ -88,8 +217,9 @@ function Dashboard() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-base md:text-lg font-semibold text-white mb-1">Flutuações de Humor</h3>
-                  <p className="text-sm text-[#E5E7EB] leading-relaxed">Seu humor apresentou alguns altos e baixos esta semana. Considere explorar o que pode ter influenciado essas mudanças.</p>
+                  <h3 className="text-base md:text-lg font-semibold text-white mb-1">Dica da Athena</h3>
+                  <p className="text-sm text-[#E5E7EB] leading-relaxed">Recomendações personalizadas da Athena, geradas a partir das suas interações.</p>
+                  <p className="text-lg font-medium text-blue-400 mt-2">{tip}</p>
                 </div>
               </div>
 
@@ -102,22 +232,9 @@ function Dashboard() {
                    </svg>
                 </div>
                 <div>
-                  <h3 className="text-base md:text-lg font-semibold text-white mb-1">Engajamento em Atividades</h3>
-                  <p className="text-sm text-[#E5E7EB] leading-relaxed">Você registrou atividades prazerosas em vários dias. Continue assim!</p>
-                </div>
-              </div>
-
-              {/* Card 3: Consistência do Sono */}
-              <div className="bg-[#1A202C] p-4 sm:p-5 md:p-6 rounded-md flex items-start space-x-3 md:space-x-4 border border-[#2D3748] shadow-lg transition-all duration-300 ease-in-out hover:transform hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/20">
-                <div className="text-yellow-500 text-2xl flex-shrink-0 mt-1">
-                   {/* Ícone Check Amarelo */}
-                   <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 md:h-8 md:w-8" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                   </svg>
-                </div>
-                <div>
-                  <h3 className="text-base md:text-lg font-semibold text-white mb-1">Consistência do Sono</h3>
-                  <p className="text-sm text-[#E5E7EB] leading-relaxed">A qualidade do sono variou. Tentar um horário de sono mais regular pode ser benéfico.</p>
+                  <h3 className="text-base md:text-lg font-semibold text-white mb-1">Pontuação dos Relatórios</h3>
+                  <p className="text-sm text-[#E5E7EB] leading-relaxed">Pontuação calculada a partir das suas respostas nos questionários anteriores, refletindo seu progresso e padrões de comportamento ao longo do tempo.</p>
+                  <p className="text-lg font-medium text-blue-400 mt-2">{score}</p>
                 </div>
               </div>
             </div>

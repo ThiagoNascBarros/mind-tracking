@@ -9,13 +9,17 @@ interface CardProps {
     bgButton?: string;
     strokeButton?: string;
     navigationLink: string;
+    disabled?: boolean;
+    mensagem?: string;
 }
 
 export default function Card(props: CardProps) {
     const navigate = useNavigate();
     
     const handleClick = () => {
-        navigate(`${props.navigationLink}`)
+        if (!props.disabled) {
+            navigate(`${props.navigationLink}`)
+        }
     }
 
     return (
@@ -30,11 +34,15 @@ export default function Card(props: CardProps) {
             </div>
             <div className="flex-1">
                 <p className="text-xs xs:text-sm sm:text-base md:text-lg text-[#8592AD]">{props.descricao}</p>
+                {props.mensagem && (
+                    <p className="text-xs xs:text-sm sm:text-base text-red-400 mt-2">{props.mensagem}</p>
+                )}
             </div>
             <div className="mt-auto">
                 <button 
-                    className={`text-white w-full rounded-2xl p-2 xs:p-3 sm:p-4 text-xs xs:text-sm sm:text-base ${props.bgButton}${props.strokeButton ? ` ${props.strokeButton}` : ''} cursor-pointer`} 
+                    className={`text-white w-full rounded-2xl p-2 xs:p-3 sm:p-4 text-xs xs:text-sm sm:text-base ${props.bgButton}${props.strokeButton ? ` ${props.strokeButton}` : ''} ${props.disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`} 
                     onClick={handleClick}
+                    disabled={props.disabled}
                 >{props.textButton}</button>
             </div>
         </div>

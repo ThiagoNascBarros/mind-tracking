@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Cadastrar from './pages/Cadastrar';
 import Mind from './pages/Mind-ia'
 import NotFound from './pages/NotFound';
+import VerificationCode from './pages/VerificationCode';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/faq" element={<Faq />} /> 
         <Route path="/sign-in" element={<Login />} />
         <Route path="/sign-up" element={<Cadastrar />} />
+        <Route path="/verification-code" element={<VerificationCode />} />
         <Route path="/mind-ai" element={<Mind />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

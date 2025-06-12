@@ -1,8 +1,31 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FaTwitter, FaFacebookF, FaInstagram } from "react-icons/fa";
-import Logo from "./../Logo.svg";
+import Logo from "/images/Logo.svg";
 
-export default function Footer() {
+interface FooterProps {
+    isHomePage?: boolean;
+    isFaqPage?: boolean;
+}
+
+export default function Footer({ isHomePage = false, isFaqPage = false }: FooterProps) {
+    const navigate = useNavigate();
+
+    const handleNavigation = (path: string, label?: string) => {
+        if (isFaqPage) {
+            if (label?.toLowerCase() === 'inicio') {
+                navigate('/');
+            } else if (label?.toLowerCase() === 'faq') {
+                navigate('/faq');
+            } else {
+                navigate('/sign-in');
+            }
+        } else if (isHomePage && ['/questionarios', '/mind-ia', '/dashboard'].includes(path)) {
+            navigate('/faq');
+        } else {
+            navigate(path);
+        }
+    };
+
   return (
     <footer className="bg-gradient-to-bl from-[#03061B] via-[#0F1526] to-[#0F1A3D] text-white py-8 sm:py-8 px-2 sm:px-4 md:px-8 md:py-12 lg:px-[75px] min-h-[324px] flex flex-col justify-center">
       <div className="container mx-auto pl-2 md:pl-0">
@@ -25,72 +48,43 @@ export default function Footer() {
               <h2 className="text-base sm:text-[16px] font-semibold mb-3 sm:mb-4 text-left">
                 Navegação
               </h2>
-              <ul className="space-y-2 sm:space-y-2 text-sm sm:text-[14px]  text-[#E5E7EB] font-regular flex flex-col items-start">
+                            <ul className="space-y-2 sm:space-y-2 text-sm sm:text-[14px] text-[#E5E7EB] font-regular flex flex-col items-start">
                 <li>
-                  <NavLink
-                    to="/"
-                    className={({ isActive }) =>
-                      `hover:text-[#2544F4] transition-all duration-300 ease-in-out transform hover:translate-x-1 ${
-                        isActive ? "font-bold text-white" : ""
-                      }`
-                    }
+                                    <button
+                                        onClick={() => handleNavigation('/', 'Inicio')}
+                                        className="hover:text-[#2544F4] transition-all duration-300 ease-in-out transform hover:translate-x-1"
                   >
                     Início
-                  </NavLink>
+                                    </button>
                 </li>
                 <li>
-                  <NavLink
-                    to="/questionarios"
-                    className={({ isActive }) =>
-                      `hover:text-[#2544F4] transition-all duration-300 ease-in-out transform hover:translate-x-1 ${
-                        isActive ? "font-bold text-white" : ""
-                      }`
-                    }
+                                    <button
+                                        onClick={() => handleNavigation('/questionarios', 'Questionários')}
+                                        className="hover:text-[#2544F4] transition-all duration-300 ease-in-out transform hover:translate-x-1"
                   >
                     Questionários
-                  </NavLink>
+                                    </button>
                 </li>
                 <li>
-                  <NavLink
-                    to="/mind-ia"
-                    className={({ isActive }) =>
-                      `hover:text-[#2544F4] transition-all duration-300 ease-in-out transform hover:translate-x-1 ${
-                        isActive ? "font-bold text-white" : ""
-                      }`
-                    }
+                                    <button
+                                        onClick={() => handleNavigation('/mind-ia', 'Mind IA')}
+                                        className="hover:text-[#2544F4] transition-all duration-300 ease-in-out transform hover:translate-x-1"
                   >
                     Mind IA
-                  </NavLink>
+                                    </button>
                 </li>
                 <li>
-                  <NavLink
-                    to="/dashboard"
-                    className={({ isActive }) =>
-                      `hover:text-[#2544F4] transition-all duration-300 ease-in-out transform hover:translate-x-1 ${
-                        isActive ? "font-bold text-white" : ""
-                      }`
-                    }
+                                    <button
+                                        onClick={() => handleNavigation('/dashboard', 'Dashboard')}
+                                        className="hover:text-[#2544F4] transition-all duration-300 ease-in-out transform hover:translate-x-1"
                   >
                     Dashboard
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/faq"
-                    className={({ isActive }) =>
-                      `hover:text-[#2544F4] transition-all duration-300 ease-in-out transform hover:translate-x-1 ${
-                        isActive ? "font-bold text-white" : ""
-                      }`
-                    }
-                  >
-                    FAQ
-                  </NavLink>
+                                    </button>
                 </li>
               </ul>
             </nav>
           </div>
 
-          {/* Contact Section */}
           <div className="flex flex-col gap-3 sm:gap-5 items-start lg:items-start w-full lg:w-1/3 lg:pl-28">
             <h2 className="text-base sm:text-[16px] font-semibold mb-2 sm:mb-2 text-left">
               Contato
@@ -99,7 +93,7 @@ export default function Footer() {
               (11) 99999-9999
             </span>
             <span className="text-sm sm:text-[14px] text-[#E5E7EB] hover:text-white transition-colors duration-300">
-              contato@mindtracking.com
+                            suporte.mindtrack@gmail.com
             </span>
             <div className="flex gap-4 sm:gap-6 mt-3 sm:mt-4 text-xl sm:text-2xl">
               <a
