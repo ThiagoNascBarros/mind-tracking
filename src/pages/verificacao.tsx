@@ -1,11 +1,27 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function CodigoVerificacao() {
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [verificationType, setVerificationType] = useState<'recovery' | 'registration'>('recovery');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if we have an email in sessionStorage (registration) or localStorage (recovery)
+    const registrationEmail = sessionStorage.getItem('email');
+    const recoveryEmail = localStorage.getItem('recuperaEmail');
+    
+    if (registrationEmail) {
+      setVerificationType('registration');
+    } else if (recoveryEmail) {
+      setVerificationType('recovery');
+    } else {
+      // If no email is found, redirect to login
+      navigate('/sign-in');
+    }
+  }, [navigate]);
 
   const handleChange = (index: number, value: string) => {
     if (value.length === 1 && index < inputsRef.current.length - 1) {
@@ -29,28 +45,52 @@ export default function CodigoVerificacao() {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/auth/verificar-codigo", {
+      const email = verificationType === 'registration' 
+        ? sessionStorage.getItem('email')
+        : localStorage.getItem('recuperaEmail');
+
+      if (!email) {
+        setError("Email não encontrado. Por favor, tente novamente.");
+        setLoading(false);
+        return;
+      }
+
+      // Escolhe o endpoint correto baseado no tipo de verificação
+      const endpoint = verificationType === 'recovery' 
+        ? 'http://localhost:3000/auth/verificar-codigo-recuperacao'
+        : 'http://localhost:3000/auth/verify-email';
+
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: localStorage.getItem('recuperaEmail'),
+          email,
           codigo: code
         })
       });
 
       if (!response.ok) {
-        throw new Error('Erro na verificação do código');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Erro na verificação do código');
       }
 
       const data = await response.json();
 
       if (data.success) {
-        navigate("/alterar-senha");
+        if (verificationType === 'recovery') {
+          navigate("/alterar-senha");
+        } else {
+          // For registration, store the token and user data, then redirect to questionnaire
+          sessionStorage.setItem('token', data.token);
+          sessionStorage.setItem('user', JSON.stringify(data.user));
+          sessionStorage.removeItem('email');
+          navigate("/questionario");
+        }
       } else {
         setError(data.message || "Código de verificação inválido");
       }
     } catch (err) {
-      setError("Erro ao se conectar ao servidor");
+      setError(err instanceof Error ? err.message : "Erro ao se conectar ao servidor");
       console.error("Erro:", err);
     } finally {
       setLoading(false);
@@ -68,7 +108,9 @@ export default function CodigoVerificacao() {
           />
           <h1 className="text-white text-2xl font-semibold mb-1">Código de verificação</h1>
           <p className="text-[rgba(255,255,255,0.45)] text-base text-center font-['Roboto'] font-semibold">
-            Digite o código que enviamos no seu email
+            {verificationType === 'recovery' 
+              ? 'Digite o código que enviamos no seu email para recuperar sua senha'
+              : 'Digite o código que enviamos no seu email para confirmar seu cadastro'}
           </p>
         </div>
 

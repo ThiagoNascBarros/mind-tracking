@@ -1,8 +1,8 @@
 // src/pages/AthenaChatPage.tsx
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect} from "react";
 import { Send } from "lucide-react";
 import Header from "../components/Header/Header";
-import Footer from "../components/Footer/Footer";
+import Coracao from "../../public/images/Athena.svg"
 
 interface Message {
   sender: "user" | "bot";
@@ -17,8 +17,14 @@ const quickReplies = [
 ];
 
 const AthenaChatPage: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      sender: "bot",
+      content: "Olá! Eu sou a Athena, sua companheira de conversa. Estou aqui para ouvir, apoiar e ajudar você a refletir sobre suas emoções. Como posso ajudar você hoje?"
+    }
+  ]);
   const [input, setInput] = useState("");
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const sendMessage = async (text: string) => {
     if (!text.trim()) return;
@@ -59,18 +65,20 @@ const AthenaChatPage: React.FC = () => {
   };
 
   return (
-    <div className="bg-[#0A0F23] min-h-screen text-white flex flex-col">
+    <div className="bg-to-bottom-gradient min-h-screen text-white flex flex-col">
       <Header />
-      <main className="flex-1 max-w-4xl mx-auto px-4 py-12">
-        <div className=""></div>
-        <h1 className="text-3xl font-semibold mb-1 flex items-center gap-2">
-          🧠 Athena IA
-        </h1>
-        <p className="text-gray-400 mb-8">
-          Seu parceiro de chat solidário. Converse sobre qualquer coisa em sua mente.
+      <main className="flex-1 max-w-4xl mx-auto w-full px-4 pt-5 pb-1 relative">
+        <div className="flex gap-4 items-center mb-2">
+          <img src={Coracao} alt="" className="w-8 h-8" />
+          <h1 className="text-3xl font-semibold">Athena IA</h1>
+        </div>
+        <p className="text-gray-400 mb-6">
+          Seu parceiro de chat solidário. Converse sobre qualquer coisa em sua
+          mente.
         </p>
 
-        <div className="space-y-4 mb-6 max-h-[60vh] overflow-y-auto pr-2">
+        {/* Chat box */}
+        <div className="space-y-4 overflow-y-auto max-h-[calc(100vh-340px)] pr-2 custom-scrollbar">
           {messages.map((msg, i) => (
             <div
               key={i}
@@ -79,36 +87,45 @@ const AthenaChatPage: React.FC = () => {
               }`}
             >
               <div
-                className={`rounded-lg px-4 py-2 text-sm max-w-xs ${
+                className={`
+                px-4 py-2 text-sm max-w-xs break-words
+                ${
                   msg.sender === "user"
-                    ? "bg-blue-600 text-white"
-                    : "bg-[#E6F0FF] text-black"
-                }`}
+                    ? "bg-blue-600 text-white rounded-lg rounded-br-none"
+                    : "bg-[#E6F0FF] text-black rounded-lg rounded-bl-none"
+                }
+              `}
               >
                 {msg.content}
               </div>
             </div>
           ))}
+          <div ref={messagesEndRef} />
         </div>
+      </main>
+      {/* Input fixado + quick replies */}
 
-        <div className="flex flex-wrap gap-2 mb-4">
+      <div className="max-w-4xl mx-auto w-full px-4 py-4 pt-0">
+        {/* Carrossel de respostas rápidas */}
+        <div className="flex gap-2 overflow-x-auto pb-2 custom-scrollbar">
           {quickReplies.map((text, i) => (
             <button
               key={i}
               onClick={() => sendMessage(text)}
-              className="bg-transparent border border-blue-400 text-blue-400 text-sm px-4 py-2 rounded-full hover:bg-blue-500 hover:text-white transition"
+              className="flex-shrink-0 bg-transparent border border-blue-400 text-blue-400 text-sm px-4 py-2 rounded-full hover:bg-blue-500 hover:text-white transition whitespace-nowrap"
             >
               {text}
             </button>
           ))}
         </div>
 
+        {/* Formulário */}
         <form
           onSubmit={(e) => {
             e.preventDefault();
             sendMessage(input);
           }}
-          className="flex gap-2"
+          className="flex gap-2 mt-2"
         >
           <input
             type="text"
@@ -124,7 +141,7 @@ const AthenaChatPage: React.FC = () => {
             Enviar
           </button>
         </form>
-      </main>
+      </div>
     </div>
   );
 };

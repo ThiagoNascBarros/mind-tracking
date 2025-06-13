@@ -117,7 +117,7 @@ export default function Cadastrar() {
         
         if (response.ok && data.success) {
           sessionStorage.setItem('email', formData.email);
-          navigate("/verificacao");
+          navigate("/Verificacao");
         } else {
           setErrors({ submit: data.message || "Erro ao registrar usuário" });
         }
