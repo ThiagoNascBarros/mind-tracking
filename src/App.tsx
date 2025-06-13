@@ -8,7 +8,9 @@ import Login from './pages/Login';
 import Cadastrar from './pages/Cadastrar';
 import Mind from './pages/Mind-ia'
 import NotFound from './pages/NotFound';
-import VerificationCode from './pages/VerificationCode';
+import CodigoVerificacao from './pages/verificacao';
+import RedefinirSenha from './pages/redefine';
+import AlterarSenha from './pages/AlterarSenha';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -44,7 +46,9 @@ function App() {
         <Route path="/faq" element={<Faq />} /> 
         <Route path="/sign-in" element={<Login />} />
         <Route path="/sign-up" element={<Cadastrar />} />
-        <Route path="/verification-code" element={<VerificationCode />} />
+        <Route path="/verificacao" element={<CodigoVerificacao />} />
+        <Route path="/redefine" element={<RedefinirSenha />} />
+        <Route path="/alterar-senha" element={<AlterarSenha />} />
         <Route path="/mind-ai" element={
           <ProtectedRoute>
             <Mind />

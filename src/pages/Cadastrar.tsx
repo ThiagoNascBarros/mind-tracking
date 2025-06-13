@@ -116,7 +116,8 @@ export default function Cadastrar() {
         const data = await response.json();
         
         if (response.ok && data.success) {
-          navigate("/verification-code", { state: { email: formData.email } });
+          sessionStorage.setItem('email', formData.email);
+          navigate("/verificacao");
         } else {
           setErrors({ submit: data.message || "Erro ao registrar usuário" });
         }

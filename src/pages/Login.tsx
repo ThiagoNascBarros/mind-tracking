@@ -180,7 +180,7 @@ export default function Login() {
                     <button
                       type="button"
                       className="text-white text-sm hover:text-gray-300 transition font-roboto font-bold cursor-pointer"
-                      onClick={() => {/* ação de recuperação de senha */}}
+                      onClick={() => navigate('/redefine')}
                     >
                       Esqueceu sua senha?
                     </button>
