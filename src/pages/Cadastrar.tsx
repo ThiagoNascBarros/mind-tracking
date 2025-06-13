@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const logoImg = "/images/logo.png";
@@ -101,7 +101,7 @@ export default function Cadastrar() {
     if (validateRegister()) {
       setIsLoading(true);
       try {
-        const response = await fetch("http://localhost:3000/auth/register", {
+        const response = await fetch("https://mindtrack-api.onrender.com/auth/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -156,13 +156,13 @@ export default function Cadastrar() {
 
         <div className="w-full md:max-w-[400px] md:w-full h-full flex items-center justify-center p-4 md:p-8 text-white">
           <div className="w-full max-w-md space-y-4">
-            <div className="flex flex-col items-center w-full">
+            <div className="flex flex-col items-center w-full mb-0.5">
               <img src={logoImg} alt="Logo" className="h-12 w-12 mb-1" />
               <h2 className="mb-2 text-lg text-center font-medium">
                 Seja Bem-Vindo(a) ao MindTracking
               </h2>
 
-              <div className="flex bg-[#142129] p-1 rounded-full mb-3 w-full max-w-[300px]">
+              <div className="flex bg-[#142129] p-1 rounded-full  w-full max-w-[300px]">
                 <button
                   className="w-1/2 py-2 rounded-full text-sm font-medium text-white cursor-pointer"
                   onClick={() => navigate("/sign-in")}

@@ -37,7 +37,7 @@ function Dashboard() {
       }
 
       try {
-        const response = await fetch(`http://localhost:3000/questionario/pontuacao/${user.id}`, {
+        const response = await fetch(`https://mindtrack-api.onrender.com/questionario/pontuacao/${user.id}`, {
           headers: {
             "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json"
@@ -62,7 +62,7 @@ function Dashboard() {
 
     const gerarDica = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/dica', {
+        const response = await fetch('https://mindtrack-api.onrender.com/api/dica', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ function Dashboard() {
       }
 
       try {
-        const res = await fetch(`http://localhost:3000/questionario/historico/${user.id}`, {
+        const res = await fetch(`https://mindtrack-api.onrender.com/questionario/historico/${user.id}`, {
           headers: {
             "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json"

@@ -1,6 +1,5 @@
 // src/pages/AthenaChatPage.tsx
-import React, { useState, useRef, useEffect} from "react";
-import { Send } from "lucide-react";
+import React, { useState, useRef } from "react";
 import Header from "../components/Header/Header";
 import Coracao from "../../public/images/Athena.svg"
 
@@ -35,7 +34,7 @@ const AthenaChatPage: React.FC = () => {
 
     try {
       const token = sessionStorage.getItem('token');
-      const response = await fetch('http://localhost:3000/api/chat', {
+      const response = await fetch('https://mindtrack-api.onrender.com/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -66,7 +65,9 @@ const AthenaChatPage: React.FC = () => {
 
   return (
     <div className="bg-to-bottom-gradient min-h-screen text-white flex flex-col">
-      <Header />
+      <div className="z-50">
+        <Header />
+      </div>
       <main className="flex-1 max-w-4xl mx-auto w-full px-4 pt-5 pb-1 relative">
         <div className="flex gap-4 items-center mb-2">
           <img src={Coracao} alt="" className="w-8 h-8" />

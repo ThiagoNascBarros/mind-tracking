@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 const features = [
   {
     title: 'Check-ins Diários Simplificados',
-    desc: 'Registre seu humor, sono e níveis de estresse em segundos. Um hábito pequeno com grande impacto.',
+    desc: 'Registre seu humor, sono e níveis de estresse em segundos. Um hábito pequeno com  impacto.',
     icon: '/images/questionario.svg',
   },
   {

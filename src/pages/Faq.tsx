@@ -120,7 +120,7 @@ const FaqPage: React.FC = () => {
                     {faq.question}
                   </h3>
                   <motion.div 
-                    className={`transform transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ''}`}
+                    className={`transform transition-transform duration-300 ${openIndex === index ? 'rotate-0' : ''}`}
                     animate={{ rotate: openIndex === index ? 180 : 0 }}
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                   >
