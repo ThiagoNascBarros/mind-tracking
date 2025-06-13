@@ -3,13 +3,9 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { handleProtectedNavigation } from "../../utils/auth";
 
-// No início do arquivo
-interface HeaderProps {
-    isHomePage?: boolean;
-    isFaqPage?: boolean;
-}
-export default function Header({ isHomePage = false, isFaqPage = false }: HeaderProps) {
+export default function Header() {
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -22,18 +18,10 @@ export default function Header({ isHomePage = false, isFaqPage = false }: Header
     };
 
     const handleNavigation = (path: string, label?: string) => {
-        if (isFaqPage) {
-            if (label?.toLowerCase() === 'inicio') {
-                navigate('/');
-            } else if (label?.toLowerCase() === 'faq') {
-                navigate('/faq');
-            } else {
-                navigate('/sign-in');
-            }
-        } else if (isHomePage && ['/questionarios', '/mind-ai', '/dashboard'].includes(path)) {
-            navigate('/faq');
+        if (label?.toLowerCase() === 'inicio') {
+            navigate('/');
         } else {
-            navigate(path);
+            handleProtectedNavigation(navigate, path);
         }
     };
 

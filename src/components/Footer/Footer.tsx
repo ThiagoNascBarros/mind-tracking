@@ -1,28 +1,18 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaTwitter, FaFacebookF, FaInstagram } from "react-icons/fa";
 import Logo from "/images/Logo.svg";
+import { handleProtectedNavigation } from "../../utils/auth";
 
-interface FooterProps {
-    isHomePage?: boolean;
-    isFaqPage?: boolean;
-}
-
-export default function Footer({ isHomePage = false, isFaqPage = false }: FooterProps) {
+export default function Footer() {
     const navigate = useNavigate();
 
     const handleNavigation = (path: string, label?: string) => {
-        if (isFaqPage) {
-            if (label?.toLowerCase() === 'inicio') {
-                navigate('/');
-            } else if (label?.toLowerCase() === 'faq') {
-                navigate('/faq');
-            } else {
-                navigate('/sign-in');
-            }
-        } else if (isHomePage && ['/questionarios', '/mind-ia', '/dashboard'].includes(path)) {
+        if (label?.toLowerCase() === 'inicio') {
+            navigate('/');
+        } else if (label?.toLowerCase() === 'faq') {
             navigate('/faq');
         } else {
-            navigate(path);
+            handleProtectedNavigation(navigate, path);
         }
     };
 
@@ -80,6 +70,14 @@ export default function Footer({ isHomePage = false, isFaqPage = false }: Footer
                   >
                     Dashboard
                                     </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => handleNavigation('/faq', 'FAQ')}
+                    className="hover:text-[#2544F4] transition-all duration-300 ease-in-out transform hover:translate-x-1"
+                  >
+                    FAQ
+                  </button>
                 </li>
               </ul>
             </nav>

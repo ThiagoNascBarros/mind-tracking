@@ -7,7 +7,7 @@ import Footer from "../components/Footer/Footer";
 
 async function verificarQuestionarioDiario(userId: string, token: string): Promise<boolean> {
     try {
-        const response = await fetch(`http://localhost:3000/questionario/verificar/${userId}`, {
+        const response = await fetch(`http://localhost:3000/questionario/diario/verificar/${userId}`, {
             headers: {
                 "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"
@@ -19,10 +19,10 @@ async function verificarQuestionarioDiario(userId: string, token: string): Promi
         }
 
         const data = await response.json();
-        return data.podeResponder;
+        return !data.ja_respondido;
     } catch (error) {
         console.error('Erro ao verificar questionário:', error);
-        return false;
+        return true; // Em caso de erro, permitimos que o usuário tente responder
     }
 }
 
@@ -71,7 +71,7 @@ export default function Questionarios() {
                             descricao="Conte para nós como foram as partes mais importantes do seu dia. Sua reflexão diária é um passo valioso para o autoconhecimento, o equilíbrio emocional e a construção de uma vida mais consciente e significativa."
                             textButton="Iniciar Questionário"
                             bgButton="bg-[#3399FF] hover:bg-[#2980e9] transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/30"
-                            navigationLink="/questionario"
+                            navigationLink="/questionario/diario"
                             disabled={!podeResponder}
                             mensagem={mensagem}
                         />  

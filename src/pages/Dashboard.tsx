@@ -56,7 +56,7 @@ function Dashboard() {
 
       } catch (error) {
         console.error("Erro ao carregar pontuação:", error);
-        setScore("Erro ao carregar pontuação");
+        setScore("Responda questionarios para gerar uma nota");
       }
     };
 
@@ -78,7 +78,7 @@ function Dashboard() {
         setTip(data.dica);
       } catch (error) {
         console.error('Erro ao gerar dica:', error);
-        setTip('Erro ao gerar dica. Tente novamente mais tarde.');
+        setTip('Converse com Athena para gerar dicas.');
       }
     };
 

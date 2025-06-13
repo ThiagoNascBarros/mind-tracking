@@ -10,7 +10,7 @@ import BenefitCardList from "../components/Home/BenefitCardList";
 export default function Home() {
   return (
     <main className="bg-[linear-gradient(135deg,#03061B_0%,#0F1526_50%,#0F1A3D_100%)] text-white">
-      <Header isHomePage={true} />
+      <Header />
       {/* Hero Section */}
       <section className="px-4 sm:px-6 md:px-8 lg:px-25 py-8 md:py-16 flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto">
         <div className="w-full md:max-w-2xl space-y-4 md:space-y-6 text-center md:text-left">
@@ -109,7 +109,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <Footer isHomePage={true} />
+      <Footer />
     </main>
   );
 }
