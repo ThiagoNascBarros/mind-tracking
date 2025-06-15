@@ -34,7 +34,11 @@ const AthenaChatPage: React.FC = () => {
 
     try {
       const token = sessionStorage.getItem('token');
-      const response = await fetch('https://mindtrack-api.onrender.com/api/chat', {
+      if (!token) {
+        throw new Error('Faça login para conversar com a Athena');
+      }
+
+      const response = await fetch('https://mindtrack-api-1.onrender.com/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -44,20 +48,27 @@ const AthenaChatPage: React.FC = () => {
       });
 
       if (!response.ok) {
+        if (response.status === 500) {
+          throw new Error('Serviço temporariamente indisponível');
+        }
         throw new Error('Erro ao conectar à API');
       }
 
       const data = await response.json();
+      if (!data.response) {
+        throw new Error('Resposta inválida do servidor');
+      }
+
       const botReply = {
         sender: "bot" as const,
-        content: data.response || "Desculpe, houve um erro ao processar sua mensagem."
+        content: data.response
       };
       setMessages([...newMessages, botReply]);
     } catch (error) {
       console.error('Erro ao enviar mensagem:', error);
       const errorMessage = {
         sender: "bot" as const,
-        content: "Erro ao conectar com o servidor. Tente novamente mais tarde."
+        content: error instanceof Error ? error.message : "Nesse momento a Athena não pode te responder, tente novamente mais tarde."
       };
       setMessages([...newMessages, errorMessage]);
     }

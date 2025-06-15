@@ -57,8 +57,8 @@ export default function CodigoVerificacao() {
 
       // Escolhe o endpoint correto baseado no tipo de verificação
       const endpoint = verificationType === 'recovery' 
-        ? 'https://mindtrack-api.onrender.com/auth/verificar-codigo-recuperacao'
-        : 'https://mindtrack-api.onrender.com/auth/verify-email';
+        ? 'https://mindtrack-api-1.onrender.com/auth/verificar-codigo'
+        : 'https://mindtrack-api-1.onrender.com/auth/verify-email';
 
       const response = await fetch(endpoint, {
         method: "POST",

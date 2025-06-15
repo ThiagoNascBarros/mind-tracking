@@ -13,7 +13,7 @@ export default function RedefinirSenha() {
     setLoading(true);
 
     try {
-      const response = await fetch('https://mindtrack-api.onrender.com/auth/recuperar-senha', {
+      const response = await fetch('https://mindtrack-api-1.onrender.com/auth/recuperar-senha', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })

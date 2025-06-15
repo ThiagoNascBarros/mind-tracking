@@ -37,7 +37,7 @@ function Dashboard() {
       }
 
       try {
-        const response = await fetch(`https://mindtrack-api.onrender.com/questionario/pontuacao/${user.id}`, {
+        const response = await fetch(`https://mindtrack-api-1.onrender.com/questionario/pontuacao/${user.id}`, {
           headers: {
             "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json"
@@ -62,23 +62,36 @@ function Dashboard() {
 
     const gerarDica = async () => {
       try {
-        const response = await fetch('https://mindtrack-api.onrender.com/api/dica', {
+        const token = sessionStorage.getItem('token');
+        if (!token) {
+          setTip('Faça login para receber dicas personalizadas.');
+          return;
+        }
+
+        const response = await fetch('https://mindtrack-api-1.onrender.com/api/dica', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+            'Authorization': `Bearer ${token}`
           }
         });
 
         if (!response.ok) {
-          throw new Error('Erro ao buscar a dica: ' + response.statusText);
+          if (response.status === 500) {
+            throw new Error('Serviço temporariamente indisponível');
+          }
+          throw new Error('Erro ao buscar a dica');
         }
 
         const data = await response.json();
-        setTip(data.dica);
+        if (data.dica) {
+          setTip(data.dica);
+        } else {
+          setTip('Converse com Athena para gerar dicas personalizadas.');
+        }
       } catch (error) {
         console.error('Erro ao gerar dica:', error);
-        setTip('Converse com Athena para gerar dicas.');
+        setTip('Converse com Athena para gerar dicas personalizadas.');
       }
     };
 
@@ -92,7 +105,7 @@ function Dashboard() {
       }
 
       try {
-        const res = await fetch(`https://mindtrack-api.onrender.com/questionario/historico/${user.id}`, {
+        const res = await fetch(`https://mindtrack-api-1.onrender.com/questionario/historico/${user.id}`, {
           headers: {
             "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json"

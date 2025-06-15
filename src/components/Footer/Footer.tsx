@@ -2,9 +2,16 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { FaTwitter, FaFacebookF, FaInstagram } from "react-icons/fa";
 import Logo from "/images/Logo.svg";
 import { handleProtectedNavigation } from "../../utils/auth";
+import { useEffect, useState } from "react";
 
 export default function Footer() {
     const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const token = sessionStorage.getItem("token");
+        setIsLoggedIn(!!token);
+    }, []);
 
     const handleNavigation = (path: string, label?: string) => {
         if (label?.toLowerCase() === 'inicio') {
@@ -21,11 +28,13 @@ export default function Footer() {
       <div className="container mx-auto pl-2 md:pl-0">
         <div className="flex flex-col lg:flex-row items-start lg:items-start justify-between sm:gap-10 h-[500px] sm:h-auto">
           <div className="flex flex-col items-start lg:items-start gap-2 sm:gap-4 lg:gap-8 w-full lg:w-1/3 text-left">
-            <img
-              className="h-12 sm:h-16 lg:h-19 transform hover:scale-105 transition-transform duration-300"
-              src={Logo}
-              alt="Mind Tracking Logo"
-            />
+            <NavLink to={isLoggedIn ? "/dashboard" : "/"}>
+              <img
+                className="h-12 sm:h-16 lg:h-19 transform hover:scale-105 transition-transform duration-300"
+                src={Logo}
+                alt="Mind Tracking Logo"
+              />
+            </NavLink>
             <p className="text-sm sm:text-sm lg:text-base text-[#E5E7EB] leading-relaxed w-[300px] sm:w-auto">
               Seu companheiro digital para autoconhecimento, bem-estar mental e
               crescimento pessoal.
@@ -38,38 +47,40 @@ export default function Footer() {
               <h2 className="text-base sm:text-[16px] font-semibold mb-3 sm:mb-4 text-left">
                 Navegação
               </h2>
-                            <ul className="space-y-2 sm:space-y-2 text-sm sm:text-[14px] text-[#E5E7EB] font-regular flex flex-col items-start">
+              <ul className="space-y-2 sm:space-y-2 text-sm sm:text-[14px] text-[#E5E7EB] font-regular flex flex-col items-start">
+                {!isLoggedIn && (
+                  <li>
+                    <button
+                      onClick={() => handleNavigation('/', 'Inicio')}
+                      className="hover:text-[#2544F4] transition-all duration-300 ease-in-out transform hover:translate-x-1"
+                    >
+                      Início
+                    </button>
+                  </li>
+                )}
                 <li>
-                                    <button
-                                        onClick={() => handleNavigation('/', 'Inicio')}
-                                        className="hover:text-[#2544F4] transition-all duration-300 ease-in-out transform hover:translate-x-1"
-                  >
-                    Início
-                                    </button>
-                </li>
-                <li>
-                                    <button
-                                        onClick={() => handleNavigation('/questionarios', 'Questionários')}
-                                        className="hover:text-[#2544F4] transition-all duration-300 ease-in-out transform hover:translate-x-1"
+                  <button
+                    onClick={() => handleNavigation('/questionarios', 'Questionários')}
+                    className="hover:text-[#2544F4] transition-all duration-300 ease-in-out transform hover:translate-x-1"
                   >
                     Questionários
-                                    </button>
+                  </button>
                 </li>
                 <li>
-                                    <button
-                                        onClick={() => handleNavigation('/mind-ia', 'Mind IA')}
-                                        className="hover:text-[#2544F4] transition-all duration-300 ease-in-out transform hover:translate-x-1"
+                  <button
+                    onClick={() => handleNavigation('/mind-ai', 'Mind IA')}
+                    className="hover:text-[#2544F4] transition-all duration-300 ease-in-out transform hover:translate-x-1"
                   >
                     Mind IA
-                                    </button>
+                  </button>
                 </li>
                 <li>
-                                    <button
-                                        onClick={() => handleNavigation('/dashboard', 'Dashboard')}
-                                        className="hover:text-[#2544F4] transition-all duration-300 ease-in-out transform hover:translate-x-1"
+                  <button
+                    onClick={() => handleNavigation('/dashboard', 'Dashboard')}
+                    className="hover:text-[#2544F4] transition-all duration-300 ease-in-out transform hover:translate-x-1"
                   >
                     Dashboard
-                                    </button>
+                  </button>
                 </li>
                 <li>
                   <button

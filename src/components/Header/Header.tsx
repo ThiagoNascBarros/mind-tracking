@@ -66,7 +66,7 @@ export default function Header() {
       style={{ background: "#070B1F" }}
     >
       <div>
-        <NavLink to="/">
+        <NavLink to={isLoggedIn ? "/dashboard" : "/"}>
           <img
             src={Logo}
             alt="logo"
@@ -78,7 +78,10 @@ export default function Header() {
       {/* Menu Desktop */}
       <nav className="hidden lg:block">
         <ul className="flex gap-16">
-          {["Inicio", "Questionarios", "Mind AI", "Dashboard"].map((item) => (
+          {(isLoggedIn 
+            ? ["Questionarios", "Mind AI", "Dashboard"]
+            : ["Inicio", "Questionarios", "Mind AI", "Dashboard"]
+          ).map((item) => (
             <li key={item}>
               <button
                 onClick={() =>
@@ -165,28 +168,29 @@ export default function Header() {
             style={{ background: "#070B1F" }}
           >
             <ul className="flex flex-col p-4 md:p-6 space-y-4 md:space-y-6">
-              {["Inicio", "Questionarios", "Mind AI", "Dashboard"].map(
-                (item, index) => (
-                  <motion.li
-                    key={item}
-                    variants={menuItemVariants}
-                    transition={{ delay: 0.1 * (index + 1) }}
+              {(isLoggedIn 
+                ? ["Questionarios", "Mind AI", "Dashboard"]
+                : ["Inicio", "Questionarios", "Mind AI", "Dashboard"]
+              ).map((item, index) => (
+                <motion.li
+                  key={item}
+                  variants={menuItemVariants}
+                  transition={{ delay: 0.1 * (index + 1) }}
+                >
+                  <button
+                    onClick={() => {
+                      handleNavigation(
+                        `/${item.toLowerCase().replace(/\s+/g, "-")}`,
+                        item
+                      );
+                      toggleMenu();
+                    }}
+                    className={navLinkClass({ isActive: false })}
                   >
-                    <button
-                      onClick={() => {
-                        handleNavigation(
-                          `/${item.toLowerCase().replace(/\s+/g, "-")}`,
-                          item
-                        );
-                        toggleMenu();
-                      }}
-                      className={navLinkClass({ isActive: false })}
-                    >
-                      {item}
-                    </button>
-                  </motion.li>
-                )
-              )}
+                    {item}
+                  </button>
+                </motion.li>
+              ))}
 
               <motion.li
                 variants={menuItemVariants}
