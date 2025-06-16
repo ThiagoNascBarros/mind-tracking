@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
+import QuestionnaireHeader from "../Header/QuestionnaireHeader";
+import QuestionnaireFooter from "../Footer/QuestionnaireFooter";
 
 interface Pergunta {
   id: number;
@@ -41,7 +41,7 @@ const Questionario: React.FC<QuestionarioProps> = ({ mostrarSaudacao = false }) 
       }
 
       const isQuestionarioInicial = !user.questionario_inicial;
-      const url = `https://mindtrack-api-1.onrender.com/questionario/perguntas${isQuestionarioInicial ? '?questionario_inicial=true' : ''}`;
+      const url = `https://mindtrack-api.onrender.com/questionario/perguntas${isQuestionarioInicial ? '?questionario_inicial=true' : ''}`;
       
       const response = await fetch(url, {
         headers: {
@@ -98,7 +98,7 @@ const Questionario: React.FC<QuestionarioProps> = ({ mostrarSaudacao = false }) 
         return;
       }
 
-      const response = await fetch("https://mindtrack-api-1.onrender.com/questionario/responder", {
+      const response = await fetch("https://mindtrack-api.onrender.com/questionario/responder", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -113,7 +113,7 @@ const Questionario: React.FC<QuestionarioProps> = ({ mostrarSaudacao = false }) 
         sessionStorage.setItem("user", JSON.stringify(user));
 
         // Buscar pontuação
-        const pontuacaoRes = await fetch(`https://mindtrack-api-1.onrender.com/questionario/pontuacao/${user.id}`, {
+        const pontuacaoRes = await fetch(`https://mindtrack-api.onrender.com/questionario/pontuacao/${user.id}`, {
           headers: {
             "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json"
@@ -139,13 +139,13 @@ const Questionario: React.FC<QuestionarioProps> = ({ mostrarSaudacao = false }) 
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col">
-        <Header />
+        <QuestionnaireHeader />
         <div className="flex-1 bg-[#0A0F23] text-white px-4 sm:px-6 md:px-12 lg:px-24 py-8 md:py-12">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-lg">Carregando perguntas...</p>
           </div>
         </div>
-        <Footer />
+        <QuestionnaireFooter />
       </div>
     );
   }
@@ -153,7 +153,7 @@ const Questionario: React.FC<QuestionarioProps> = ({ mostrarSaudacao = false }) 
   if (error) {
     return (
       <div className="min-h-screen flex flex-col">
-        <Header />
+        <QuestionnaireHeader />
         <div className="flex-1 bg-[#0A0F23] text-white px-4 sm:px-6 md:px-12 lg:px-24 py-8 md:py-12">
           <div className="max-w-3xl mx-auto text-center">
             <div className="error">
@@ -168,7 +168,7 @@ const Questionario: React.FC<QuestionarioProps> = ({ mostrarSaudacao = false }) 
             </div>
           </div>
         </div>
-        <Footer />
+        <QuestionnaireFooter />
       </div>
     );
   }
@@ -178,7 +178,7 @@ const Questionario: React.FC<QuestionarioProps> = ({ mostrarSaudacao = false }) 
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header />
+      <QuestionnaireHeader />
       <div className="flex-1 bg-[#0A0F23] text-white px-4 sm:px-6 md:px-12 lg:px-24 py-8 md:py-12">
         <div className="max-w-3xl mx-auto">
           {/* Barra de progresso */}
@@ -257,7 +257,7 @@ const Questionario: React.FC<QuestionarioProps> = ({ mostrarSaudacao = false }) 
           </div>
         </div>
       </div>
-      <Footer />
+      <QuestionnaireFooter />
 
       {/* Modal de Confirmação */}
       {showModal && (

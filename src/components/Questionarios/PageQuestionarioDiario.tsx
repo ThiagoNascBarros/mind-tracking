@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
+import QuestionnaireHeader from "../Header/QuestionnaireHeader";
+import QuestionnaireFooter from "../Footer/QuestionnaireFooter";
 
 interface Pergunta {
   id: number;
@@ -35,7 +35,7 @@ const QuestionarioDiario: React.FC = () => {
         return;
       }
 
-      const response = await fetch(`https://mindtrack-api-1.onrender.com/questionario/diario/verificar/${user.id}`, {
+      const response = await fetch(`https://mindtrack-api.onrender.com/questionario/diario/verificar/${user.id}`, {
         headers: {
           "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json"
@@ -71,7 +71,7 @@ const QuestionarioDiario: React.FC = () => {
         return;
       }
 
-      const response = await fetch("https://mindtrack-api-1.onrender.com/questionario/diario/perguntas", {
+      const response = await fetch("https://mindtrack-api.onrender.com/questionario/diario/perguntas", {
         headers: {
           "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json"
@@ -114,7 +114,7 @@ const QuestionarioDiario: React.FC = () => {
         return;
       }
 
-      const response = await fetch("https://mindtrack-api-1.onrender.com/questionario/diario/responder", {
+      const response = await fetch("https://mindtrack-api.onrender.com/questionario/diario/responder", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -139,13 +139,13 @@ const QuestionarioDiario: React.FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col">
-        <Header />
+        <QuestionnaireHeader />
         <div className="flex-1 bg-[#0A0F23] text-white px-4 sm:px-6 md:px-12 lg:px-24 py-8 md:py-12">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-lg">Carregando...</p>
           </div>
         </div>
-        <Footer />
+        <QuestionnaireFooter />
       </div>
     );
   }
@@ -153,7 +153,7 @@ const QuestionarioDiario: React.FC = () => {
   if (error) {
     return (
       <div className="min-h-screen flex flex-col">
-        <Header />
+        <QuestionnaireHeader />
         <div className="flex-1 bg-[#0A0F23] text-white px-4 sm:px-6 md:px-12 lg:px-24 py-8 md:py-12">
           <div className="max-w-3xl mx-auto text-center">
             <div className="error">
@@ -168,7 +168,7 @@ const QuestionarioDiario: React.FC = () => {
             </div>
           </div>
         </div>
-        <Footer />
+        <QuestionnaireFooter />
       </div>
     );
   }
@@ -176,7 +176,7 @@ const QuestionarioDiario: React.FC = () => {
   if (jaRespondido) {
     return (
       <div className="min-h-screen flex flex-col">
-        <Header />
+        <QuestionnaireHeader />
         <div className="flex-1 bg-[#0A0F23] text-white px-4 sm:px-6 md:px-12 lg:px-24 py-8 md:py-12">
           <div className="max-w-3xl mx-auto text-center">
             <div className="bg-[#1E2A48] p-8 rounded-xl">
@@ -192,7 +192,7 @@ const QuestionarioDiario: React.FC = () => {
             </div>
           </div>
         </div>
-        <Footer />
+        <QuestionnaireFooter />
       </div>
     );
   }
@@ -202,7 +202,7 @@ const QuestionarioDiario: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header />
+      <QuestionnaireHeader />
       <div className="flex-1 bg-[#0A0F23] text-white px-4 sm:px-6 md:px-12 lg:px-24 py-8 md:py-12">
         <div className="max-w-3xl mx-auto">
           {/* Barra de progresso */}
@@ -275,7 +275,7 @@ const QuestionarioDiario: React.FC = () => {
           </div>
         </div>
       </div>
-      <Footer />
+      <QuestionnaireFooter />
     </div>
   );
 };

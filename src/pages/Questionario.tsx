@@ -1,4 +1,3 @@
-import { useParams } from "react-router-dom";
 import Questionario from "../components/Questionarios/PageQuestionario";
 import QuestionarioDiario from "../components/Questionarios/PageQuestionarioDiario";
 

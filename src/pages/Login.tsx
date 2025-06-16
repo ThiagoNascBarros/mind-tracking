@@ -33,7 +33,7 @@ export default function Login() {
 
     setIsLoading(true);
     try {
-      const response = await fetch("https://mindtrack-api-1.onrender.com/auth/login", {
+      const response = await fetch("https://mindtrack-api.onrender.com/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -54,6 +54,9 @@ export default function Login() {
         } else {
           navigate('/questionario');
         }
+      } else if (data.needsVerification) {
+        sessionStorage.setItem('email', data.email);
+        navigate('/verificacao');
       } else {
         setErrors({ submit: data.message || 'Erro ao fazer login' });
       }
