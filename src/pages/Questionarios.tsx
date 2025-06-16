@@ -7,7 +7,7 @@ import Footer from "../components/Footer/Footer";
 
 async function verificarQuestionarioDiario(userId: string, token: string): Promise<boolean> {
     try {
-        const response = await fetch(`https://mindtrack-api.onrender.com/questionario/diario/verificar/${userId}`, {
+        const response = await fetch(`http://localhost:3000/questionario/diario/verificar/${userId}`, {
             headers: {
                 "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"
