@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import Header from '../components/Header/Header';
@@ -37,7 +37,7 @@ function Dashboard() {
       }
 
       try {
-        const response = await fetch(`http://localhost:3000/health/questionario/pontuacao/${user.id}`, {
+        const response = await fetch(`http://localhost:3000/questionario/pontuacao/${user.id}`, {
           headers: {
             "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json"
@@ -68,7 +68,7 @@ function Dashboard() {
           return;
         }
 
-        const response = await fetch('http://localhost:3000/health/api/dica', {
+        const response = await fetch('http://localhost:3000/api/dica', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ function Dashboard() {
       }
 
       try {
-        const res = await fetch(`http://localhost:3000/health/questionario/historico/${user.id}`, {
+        const res = await fetch(`http://localhost:3000/questionario/historico/${user.id}`, {
           headers: {
             "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json"

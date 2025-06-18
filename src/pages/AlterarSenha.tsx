@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Logo from '../../public/images/logo.png';
 
 export default function AlterarSenha() {
   const [novaSenha, setNovaSenha] = useState('');
@@ -32,7 +33,7 @@ export default function AlterarSenha() {
       setLoading(true);
       try {
         const email = localStorage.getItem('recuperaEmail');
-        const response = await fetch('http://localhost:3000/health/auth/redefinir-senha', {
+        const response = await fetch('http://localhost:3000/auth/redefinir-senha', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, senha: novaSenha, confirmarSenha })
@@ -60,7 +61,7 @@ export default function AlterarSenha() {
       <div className="bg-[#203655] p-8 rounded-xl shadow-md w-full max-w-md">
         <div className="flex flex-col items-center mb-6">
           <img
-            src="public/images/Logo.png"
+            src={ Logo }
             alt="Logo"
             className="h-16 w-16 mb-4"
           />

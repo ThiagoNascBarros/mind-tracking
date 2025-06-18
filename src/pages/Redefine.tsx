@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Logo from '../../public/images/logo.png';
 
 export default function RedefinirSenha() {
   const [email, setEmail] = useState('');
@@ -13,7 +14,7 @@ export default function RedefinirSenha() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3000/health/auth/recuperar-senha', {
+      const response = await fetch('http://localhost:3000/auth/recuperar-senha', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
@@ -40,7 +41,7 @@ export default function RedefinirSenha() {
       <div className="bg-[#203655] p-8 rounded-xl shadow-md w-full max-w-md">
         <div className="flex flex-col items-center mb-6">
           <img
-            src="public/images/Logo.png"
+            src={Logo}
             alt="Logo"
             className="h-16 w-16 mb-4"
           />

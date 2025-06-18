@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Logo from '../../public/images/logo.png';
 
 export default function CodigoVerificacao() {
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
@@ -57,8 +58,8 @@ export default function CodigoVerificacao() {
 
       // Escolhe o endpoint correto baseado no tipo de verificação
       const endpoint = verificationType === 'recovery' 
-        ? 'http://localhost:3000/health/auth/verificar-codigo'
-        : 'http://localhost:3000/health/auth/verify-email';
+        ? 'http://localhost:3000/auth/verificar-codigo'
+        : 'http://localhost:3000/auth/verify-email';
 
       const response = await fetch(endpoint, {
         method: "POST",
@@ -102,7 +103,7 @@ export default function CodigoVerificacao() {
       <div className="bg-[#203655] p-8 rounded-2xl shadow-md w-full max-w-md">
         <div className="flex flex-col items-center mb-6">
           <img
-            src="public/images/Logo.png"
+            src={Logo}
             alt="Logo"
             className="h-16 w-16 mb-4"
           />

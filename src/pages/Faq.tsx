@@ -78,7 +78,7 @@ const FaqPage: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0A0F23] to-[#1a1f3d] text-white">
       <div className="z-50">
-        <Header isFaqPage={true} />
+        <Header />
       </div>
       <main className="flex-1 px-4 sm:px-6 md:px-12 lg:px-24 py-8 md:py-12 lg:py-16">
         <div className="max-w-4xl mx-auto">
@@ -218,7 +218,7 @@ const FaqPage: React.FC = () => {
           </div>
         </div>
       </main>
-      <Footer isFaqPage={true} />
+      <Footer />
     </div>
   );
 };

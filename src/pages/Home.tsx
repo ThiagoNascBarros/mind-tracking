@@ -1,5 +1,4 @@
 // src/pages/Home.jsx
-import React from "react";
 import { Link } from "react-router-dom";
 import FeatureSection from "../components/Home/FeatureSection";
 import Header from "../components/Header/Header";
