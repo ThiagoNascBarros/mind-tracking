@@ -33,7 +33,7 @@ export default function AlterarSenha() {
       setLoading(true);
       try {
         const email = localStorage.getItem('recuperaEmail');
-        const response = await fetch('http://localhost:3000/auth/redefinir-senha', {
+        const response = await fetch('https://mindtrack-api.onrender.com/auth/redefinir-senha', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, senha: novaSenha, confirmarSenha })
