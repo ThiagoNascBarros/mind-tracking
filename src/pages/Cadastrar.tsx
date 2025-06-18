@@ -101,7 +101,7 @@ export default function Cadastrar() {
     if (validateRegister()) {
       setIsLoading(true);
       try {
-        const response = await fetch("https://mindtrack-api.onrender.com/auth/register", {
+        const response = await fetch("http://localhost:3000/health/auth/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
