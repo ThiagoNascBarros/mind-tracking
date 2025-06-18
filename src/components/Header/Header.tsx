@@ -52,6 +52,9 @@ export default function Header() {
     },
   };
 
+  const userString = sessionStorage.getItem("user");
+  const nameUser = userString ? JSON.parse(userString).nome.trim().slice(0, 2) : "";
+
   const menuItemVariants = {
     closed: { opacity: 0, x: -20 },
     open: { opacity: 1, x: 0 },
@@ -111,8 +114,8 @@ export default function Header() {
             aria-label="Perfil"
           >
             <Avatar className="bg-[#3399FF] hover:bg-blue-700 size-12 hover:text-gray-50">
-              <AvatarFallback>
-                <UserRoundIcon size={24} className="hover:text-gray-50" aria-hidden="true" />
+              <AvatarFallback className="font-bold text-[1.2em]">
+                { nameUser }
               </AvatarFallback>
             </Avatar>
           </button>

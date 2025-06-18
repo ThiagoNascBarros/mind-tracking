@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Eye, EyeClosed } from "lucide-react"
 import Logo from '../../public/images/logo.png';
 
 export default function AlterarSenha() {
@@ -92,7 +93,7 @@ export default function AlterarSenha() {
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-300"
                 onClick={() => setMostrarNovaSenha(!mostrarNovaSenha)}
               >
-                {mostrarNovaSenha ? '👁️' : '👁️‍🗨️'}
+                {mostrarNovaSenha ? <EyeClosed /> : <Eye />}
               </button>
             </div>
             {erros.novaSenha && (
@@ -120,7 +121,7 @@ export default function AlterarSenha() {
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-300"
                 onClick={() => setMostrarConfirmarSenha(!mostrarConfirmarSenha)}
               >
-                {mostrarConfirmarSenha ? '👁️' : '👁️‍🗨️'}
+                {mostrarConfirmarSenha ? <Eye /> : <EyeClosed />}
               </button>
             </div>
             {erros.confirmarSenha && (

@@ -2,6 +2,18 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../../public/images/logo.png';
 
+// Remove number input spinners for all browsers
+const inputSpinnerStyle = `
+  input[type=number]::-webkit-inner-spin-button, 
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+`;
+
 export default function CodigoVerificacao() {
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -100,6 +112,7 @@ export default function CodigoVerificacao() {
 
   return (
     <div className="flex items-center justify-center min-h-screen px-4 md:py-8 overflow-hidden">
+      <style>{inputSpinnerStyle}</style>
       <div className="bg-[#203655] p-8 rounded-2xl shadow-md w-full max-w-md">
         <div className="flex flex-col items-center mb-6">
           <img
@@ -120,7 +133,7 @@ export default function CodigoVerificacao() {
             {[0, 1, 2, 3].map((_, index) => (
               <input
                 key={index}
-                type="text"
+                type="number"
                 maxLength={1}
                 className="w-18 h-18 text-center text-2xl rounded-2xl bg-[#D9D9D9] text-black border border-[rgba(400,400,400,0.45)] focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onChange={(e) => handleChange(index, e.target.value)}
