@@ -24,6 +24,7 @@ const Questionario: React.FC<QuestionarioProps> = ({ mostrarSaudacao = false }) 
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [enviando, setEnviando] = useState(false);
 
   useEffect(() => {
     carregarPerguntas();
@@ -84,7 +85,10 @@ const Questionario: React.FC<QuestionarioProps> = ({ mostrarSaudacao = false }) 
   };
 
   const handleEnviar = async () => {
+    if (enviando) return; // Previne múltiplos cliques
+    
     try {
+      setEnviando(true);
       const token = sessionStorage.getItem("token");
       const user = JSON.parse(sessionStorage.getItem("user") || "{}");
 
@@ -133,6 +137,8 @@ const Questionario: React.FC<QuestionarioProps> = ({ mostrarSaudacao = false }) 
     } catch (error) {
       console.error("Erro:", error);
       alert("Erro ao enviar respostas");
+    } finally {
+      setEnviando(false);
     }
   };
 
@@ -247,10 +253,10 @@ const Questionario: React.FC<QuestionarioProps> = ({ mostrarSaudacao = false }) 
               ) : (
                 <button
                   className="w-full sm:w-auto bg-[#3399FF] hover:bg-[#2980e9] transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/30 px-6 py-2.5 md:py-3 rounded-full text-sm md:text-base text-white disabled:opacity-50 disabled:hover:transform-none disabled:hover:shadow-none"
-                  disabled={!respostas[perguntaAtual.id]}
+                  disabled={!respostas[perguntaAtual.id] || enviando}
                   onClick={handleEnviar}
                 >
-                  Enviar Respostas
+                  {enviando ? "Enviando..." : "Enviar Respostas"}
                 </button>
               )}
             </div>
