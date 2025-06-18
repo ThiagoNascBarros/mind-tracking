@@ -1,5 +1,5 @@
 // src/pages/AthenaChatPage.tsx
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Header from "../components/Header/Header";
 import Coracao from "../../public/images/Athena.svg"
 
@@ -24,6 +24,37 @@ const AthenaChatPage: React.FC = () => {
   ]);
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Função para fazer scroll automático para a última mensagem
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // Função para formatar a resposta da IA
+  const formatAIResponse = (response: string): string => {
+    // Converte texto entre asteriscos para negrito (mantém os asteriscos para depois processar no JSX)
+    let formatted = response
+      .replace(/(\d+\.\s)/g, '\n$1') // Quebra antes de números (1., 2., etc.)
+      .replace(/(•\s)/g, '\n$1') // Quebra antes de bullets
+      .replace(/(-\s)/g, '\n$1') // Quebra antes de hífens
+      .replace(/(\*\s)/g, '\n• ') // Substitui asteriscos por bullets preenchidos
+      .replace(/(\n\s*\n)/g, '\n\n') // Remove espaços extras entre parágrafos
+      .trim();
+
+    // Adiciona quebras de linha antes de frases que começam com palavras específicas
+    const keywords = ['Primeiro', 'Segundo', 'Terceiro', 'Além disso', 'Por outro lado', 'No entanto', 'Por exemplo', 'Em resumo', 'Lembre-se'];
+    keywords.forEach(keyword => {
+      const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
+      formatted = formatted.replace(regex, `\n${keyword}`);
+    });
+
+    return formatted;
+  };
+
+  // Efeito para fazer scroll automático sempre que as mensagens mudarem
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const sendMessage = async (text: string) => {
     if (!text.trim()) return;
@@ -61,7 +92,7 @@ const AthenaChatPage: React.FC = () => {
 
       const botReply = {
         sender: "bot" as const,
-        content: data.response
+        content: formatAIResponse(data.response)
       };
       setMessages([...newMessages, botReply]);
     } catch (error) {
@@ -75,11 +106,11 @@ const AthenaChatPage: React.FC = () => {
   };
 
   return (
-    <div className="bg-to-bottom-gradient min-h-screen text-white flex flex-col">
+<div className="bg-to-bottom-gradient min-h-screen text-white flex flex-col">
       <div className="z-50">
         <Header />
       </div>
-      <main className="flex-1 max-w-4xl mx-auto w-full px-4 pt-5 pb-32 relative">
+      <main className="flex-1 max-w-4xl mx-auto w-full px-4 pt-5 pb-1 relative">
         <div className="flex gap-4 items-center mb-2">
           <img src={Coracao} alt="" className="w-8 h-8" />
           <h1 className="text-3xl font-semibold">Athena IA</h1>
@@ -100,15 +131,30 @@ const AthenaChatPage: React.FC = () => {
             >
               <div
                 className={`
-                px-4 py-2 text-sm max-w-xs break-words
+                px-4 py-3 text-sm max-w-xs md:max-w-md lg:max-w-lg break-words leading-relaxed
                 ${
                   msg.sender === "user"
                     ? "bg-blue-600 text-white rounded-lg rounded-br-none"
-                    : "bg-[#E6F0FF] text-black rounded-lg rounded-bl-none"
+                    : "bg-[#E6F0FF] text-black rounded-lg rounded-bl-none shadow-sm"
                 }
               `}
               >
-                {msg.content}
+                {msg.sender === "bot" ? (
+                  <div className="whitespace-pre-wrap">
+                    {msg.content.split('\n').map((line, index) => {
+                      // Processa cada linha para aplicar formatação em negrito
+                      const formattedLine = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                      return (
+                        <React.Fragment key={index}>
+                          <span dangerouslySetInnerHTML={{ __html: formattedLine }} />
+                          {index < msg.content.split('\n').length - 1 && <br />}
+                        </React.Fragment>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  msg.content
+                )}
               </div>
             </div>
           ))}
@@ -116,36 +162,22 @@ const AthenaChatPage: React.FC = () => {
         </div>
       </main>
       {/* Input fixado + quick replies */}
-      <div className="fixed bottom-0 left-0 w-full bg-[#0F1A34] border-t border-gray-700 z-40">
-        <div className="max-w-4xl mx-auto w-full px-4 py-4 pt-0">
-          {/* Carrossel de respostas rápidas */}
-          <div
-            className="flex gap-2 overflow-x-auto pb-2"
-            style={{
-              scrollbarWidth: "none", // Firefox
-              msOverflowStyle: "none", // IE 10+
-            }}
-          >
-            {quickReplies.map((text, i) => (
-              <button
-                key={i}
-                onClick={() => sendMessage(text)}
-                className="flex-shrink-0 bg-transparent border border-blue-400 text-blue-400 text-sm px-4 py-2 rounded-full hover:bg-blue-500 hover:text-white transition whitespace-nowrap"
-              >
-                {text}
-              </button>
-            ))}
-          </div>
-          <style>
-            {`
-              /* Esconde a barra de rolagem do carrossel de respostas rápidas */
-              .fixed .overflow-x-auto::-webkit-scrollbar {
-                display: none;
-              }
-            `}
-          </style>
-          {/* Formulário */}
-          <form
+
+      <div className="max-w-4xl mx-auto w-full px-4 py-4 pt-0">
+        {/* Carrossel de respostas rápidas */}
+        <div className="flex gap-2 overflow-x-auto pb-2 custom-scrollbar">
+          {quickReplies.map((text, i) => (
+            <button
+              key={i}
+              onClick={() => sendMessage(text)}
+              className="flex-shrink-0 bg-transparent border border-blue-400 text-blue-400 text-sm px-4 py-2 rounded-full hover:bg-blue-500 hover:text-white transition whitespace-nowrap"
+            >
+              {text}
+            </button>
+          ))}
+        </div>
+
+        <form
             onSubmit={(e) => {
               e.preventDefault();
               sendMessage(input);
@@ -166,7 +198,6 @@ const AthenaChatPage: React.FC = () => {
               Enviar
             </button>
           </form>
-        </div>
       </div>
     </div>
   );

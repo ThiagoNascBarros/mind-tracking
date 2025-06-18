@@ -205,7 +205,7 @@ const Questionario: React.FC<QuestionarioProps> = ({ mostrarSaudacao = false }) 
           <div className="space-y-4 md:space-y-6">
             {mostrarSaudacao && indiceAtual === 0 && (
               <h2 className="text-lg md:text-xl lg:text-2xl font-semibold text-center md:text-left">
-                Bem-vinda! Vamos começar.
+                Bem-vindo(a)! Vamos começar.
               </h2>
             )}
 

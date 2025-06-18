@@ -46,7 +46,7 @@ export default function RedefinirSenha() {
             className="h-16 w-16 mb-4"
           />
           <h1 className="text-white text-2xl font-semibold mb-1">Redefinir sua senha</h1>
-          <p className="text-[rgba(255,255,255,0.45)] text-base text-center font-['Roboto'] font-semibold">
+          <p className="text-[rgba(255,255,255,0.45)] text-base text-center  font-semibold">
              Digite seu e-mail para receber um link de recuperação
           </p>
         </div>
@@ -70,7 +70,7 @@ export default function RedefinirSenha() {
             disabled={loading}
             className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-md transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Enviando...' : 'Enviar Link'}
+            {loading ? 'Enviando...' : 'Enviar código de verificação'}
           </button>
         </form>
 

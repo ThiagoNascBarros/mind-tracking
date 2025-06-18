@@ -62,8 +62,8 @@ export default function Questionarios() {
                     </p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 sm:gap-5 md:gap-6 mt-8 sm:mt-10 md:mt-12">
-                    <div className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(50%-1.5rem)] group">
+                <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-5 sm:gap-5 md:gap-5 mt-10 sm:mt-10 md:mt-12">
+                    <div className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(50%-1rem)] group">
                         <Card 
                             titulo="Questionário Diario"
                             imagemUrl={IconQuestionario}
