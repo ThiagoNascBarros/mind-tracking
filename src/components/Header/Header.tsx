@@ -4,6 +4,8 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { handleProtectedNavigation } from "../../utils/auth";
+import { UserRoundIcon } from 'lucide-react';
+import { Avatar, AvatarFallback } from "../ui/avatar";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -105,23 +107,14 @@ export default function Header() {
         {isLoggedIn ? (
           <button
             onClick={() => navigate("/perfil")}
-            className="text-white hover:text-[#3399FF] transition-colors"
+            className="flex items-center justify-center text-white hover:text-[#3399FF] transition-colors"
             aria-label="Perfil"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-8 h-8 flex align-center justify-center m-auto"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"
-              />
-            </svg>
+            <Avatar className="bg-[#3399FF] hover:bg-blue-700 size-12 hover:text-gray-50">
+              <AvatarFallback>
+                <UserRoundIcon size={24} className="hover:text-gray-50" aria-hidden="true" />
+              </AvatarFallback>
+            </Avatar>
           </button>
         ) : (
           <button
@@ -167,7 +160,7 @@ export default function Header() {
             variants={menuVariants}
             style={{ background: "#070B1F" }}
           >
-            <ul className="flex flex-col p-4 md:p-6 space-y-4 md:space-y-6">
+            <ul className="flex flex-col p-4 md:p-6 space-y-6 items-start md:space-y-7">
               {(isLoggedIn 
                 ? ["Questionarios", "Mind AI", "Dashboard"]
                 : ["Inicio", "Questionarios", "Mind AI", "Dashboard"]
@@ -199,24 +192,15 @@ export default function Header() {
                 {isLoggedIn ? (
                   <button
                     onClick={() => navigate("/perfil")}
-                    className="flex items-center justify-center m-auto text-white hover:text-[#3399FF] transition-colors"
+                    className="flex gap-5 items-center text-white hover:text-[#3399FF] transition-colors"
                     aria-label="Perfil"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-8 h-8"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"
-                      />
-                    </svg>
-                    <span className="text-lg">Perfil</span>
+                    <Avatar className="bg-[#3399FF] hover:bg-blue-700 size-12 hover:text-gray-50">
+                      <AvatarFallback>
+                        <UserRoundIcon size={28.5} className="hover:text-gray-50" aria-hidden="true" />
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="text-lg font-semibold">Perfil</span>
                   </button>
                 ) : (
                   <motion.button
