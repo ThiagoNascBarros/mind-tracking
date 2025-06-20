@@ -14,7 +14,7 @@ export default function RedefinirSenha() {
     setLoading(true);
 
     try {
-      const response = await fetch('https://mindtracking-api.onrender.com/auth/recuperar-senha', {
+      const response = await fetch('http://100.26.137.243:3000/auth/recuperar-senha', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })

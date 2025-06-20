@@ -34,7 +34,7 @@ export default function Login() {
 
     setIsLoading(true);
     try {
-      const response = await fetch("https://mindtracking-api.onrender.com/auth/login", {
+      const response = await fetch("http://100.26.137.243:3000/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

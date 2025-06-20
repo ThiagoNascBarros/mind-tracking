@@ -122,7 +122,7 @@ export default function Footer() {
                 <FaFacebookF />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/mind.tracking?utm_source=qr"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-[#3399FF] transform hover:scale-110 transition-all duration-300"

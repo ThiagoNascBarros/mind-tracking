@@ -34,7 +34,7 @@ export default function AlterarSenha() {
       setLoading(true);
       try {
         const email = localStorage.getItem('recuperaEmail');
-        const response = await fetch('https://mindtracking-api.onrender.com/auth/redefinir-senha', {
+        const response = await fetch('http://100.26.137.243:3000/auth/redefinir-senha', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, senha: novaSenha, confirmarSenha })
@@ -121,7 +121,7 @@ export default function AlterarSenha() {
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-300"
                 onClick={() => setMostrarConfirmarSenha(!mostrarConfirmarSenha)}
               >
-                {mostrarConfirmarSenha ? <Eye /> : <EyeClosed />}
+                {mostrarConfirmarSenha ? <EyeClosed /> : <Eye />}
               </button>
             </div>
             {erros.confirmarSenha && (
