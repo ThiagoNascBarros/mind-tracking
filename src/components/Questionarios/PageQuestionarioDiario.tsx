@@ -36,7 +36,7 @@ const QuestionarioDiario: React.FC = () => {
         return;
       }
 
-      const response = await fetch(`https://mindtrack-api.onrender.com/questionario/diario/verificar/${user.id}`, {
+      const response = await fetch(`https://mindtracking-api.onrender.com/questionario/diario/verificar/${user.id}`, {
         headers: {
           "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json"
@@ -72,7 +72,7 @@ const QuestionarioDiario: React.FC = () => {
         return;
       }
 
-      const response = await fetch("https://mindtrack-api.onrender.com/questionario/diario/perguntas", {
+      const response = await fetch("https://mindtracking-api.onrender.com/questionario/diario/perguntas", {
         headers: {
           "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json"
@@ -118,7 +118,7 @@ const QuestionarioDiario: React.FC = () => {
         return;
       }
 
-      const response = await fetch("https://mindtrack-api.onrender.com/questionario/diario/responder", {
+      const response = await fetch("https://mindtracking-api.onrender.com/questionario/diario/responder", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

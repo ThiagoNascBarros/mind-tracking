@@ -42,7 +42,7 @@ const Questionario: React.FC<QuestionarioProps> = ({ mostrarSaudacao = false }) 
       }
 
       const isQuestionarioInicial = !user.questionario_inicial;
-      const url = `https://mindtrack-api.onrender.com/questionario/perguntas${isQuestionarioInicial ? '?questionario_inicial=true' : ''}`;
+      const url = `https://mindtracking-api.onrender.com/questionario/perguntas${isQuestionarioInicial ? '?questionario_inicial=true' : ''}`;
       
       const response = await fetch(url, {
         headers: {
@@ -102,7 +102,7 @@ const Questionario: React.FC<QuestionarioProps> = ({ mostrarSaudacao = false }) 
         return;
       }
 
-      const response = await fetch("https://mindtrack-api.onrender.com/questionario/responder", {
+      const response = await fetch("https://mindtracking-api.onrender.com/questionario/responder", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -117,7 +117,7 @@ const Questionario: React.FC<QuestionarioProps> = ({ mostrarSaudacao = false }) 
         sessionStorage.setItem("user", JSON.stringify(user));
 
         // Buscar pontuação
-        const pontuacaoRes = await fetch(`https://mindtrack-api.onrender.com/questionario/pontuacao/${user.id}`, {
+        const pontuacaoRes = await fetch(`https://mindtracking-api.onrender.com/questionario/pontuacao/${user.id}`, {
           headers: {
             "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json"

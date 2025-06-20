@@ -69,7 +69,7 @@ const AthenaChatPage: React.FC = () => {
         throw new Error('Faça login para conversar com a Athena');
       }
 
-      const response = await fetch('https://mindtrack-api.onrender.com/api/chat', {
+      const response = await fetch('https://mindtracking-api.onrender.com/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

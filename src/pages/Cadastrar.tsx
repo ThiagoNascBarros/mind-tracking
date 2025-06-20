@@ -102,7 +102,7 @@ export default function Cadastrar() {
     if (validateRegister()) {
       setIsLoading(true);
       try {
-        const response = await fetch("https://mindtrack-api.onrender.com/auth/register", {
+        const response = await fetch("https://mindtracking-api.onrender.com/auth/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -163,7 +163,7 @@ export default function Cadastrar() {
                 Seja Bem-Vindo(a) ao MindTracking
               </h2>
 
-              <div className="flex bg-[#142129] p-1 rounded-full  w-full max-w-[300px]">
+              <div className="flex bg-[#142129] p-2 rounded-full  w-full max-w-[300px]">
                 <button
                   className="w-1/2 py-2 rounded-full text-sm font-medium text-white cursor-pointer"
                   onClick={() => navigate("/sign-in")}
