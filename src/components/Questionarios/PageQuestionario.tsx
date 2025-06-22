@@ -42,7 +42,7 @@ const Questionario: React.FC<QuestionarioProps> = ({ mostrarSaudacao = false }) 
       }
 
       const isQuestionarioInicial = !user.questionario_inicial;
-      const url = `http://100.26.137.243:3000/questionario/perguntas${isQuestionarioInicial ? '?questionario_inicial=true' : ''}`;
+      const url = `http://34.200.62.154:3000/questionario/perguntas${isQuestionarioInicial ? '?questionario_inicial=true' : ''}`;
       
       const response = await fetch(url, {
         headers: {
@@ -102,7 +102,7 @@ const Questionario: React.FC<QuestionarioProps> = ({ mostrarSaudacao = false }) 
         return;
       }
 
-      const response = await fetch("http://100.26.137.243:3000/questionario/responder", {
+      const response = await fetch("http://34.200.62.154:3000/questionario/responder", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

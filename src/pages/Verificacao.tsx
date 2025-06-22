@@ -70,8 +70,8 @@ export default function CodigoVerificacao() {
 
       // Escolhe o endpoint correto baseado no tipo de verificação
       const endpoint = verificationType === 'recovery' 
-        ? 'http://100.26.137.243:3000/auth/verificar-codigo'
-        : 'http://100.26.137.243:3000/auth/verify-email';
+        ? 'http://34.200.62.154:3000/auth/verificar-codigo'
+        : 'http://34.200.62.154:3000/auth/verify-email';
 
       const response = await fetch(endpoint, {
         method: "POST",

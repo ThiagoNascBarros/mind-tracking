@@ -69,7 +69,7 @@ const AthenaChatPage: React.FC = () => {
         throw new Error('Faça login para conversar com a Athena');
       }
 
-      const response = await fetch('http://100.26.137.243:3000/api/chat', {
+      const response = await fetch('http://34.200.62.154:3000/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

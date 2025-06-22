@@ -38,7 +38,7 @@ export default function Perfil() {
         setUser(user);
 
         // Buscar estatísticas do usuário
-        const response = await fetch(`http://100.26.137.243:3000/questionario/estatisticas/${user.id}`, {
+        const response = await fetch(`http://34.200.62.154:3000/questionario/estatisticas/${user.id}`, {
           headers: {
             "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json"
@@ -96,7 +96,7 @@ export default function Perfil() {
     }
 
     try {
-      const response = await fetch(`http://100.26.137.243:3000/auth/delete-account`, {
+      const response = await fetch(`http://34.200.62.154:3000/auth/delete-account`, {
         method: 'DELETE',
         headers: {
           "Authorization": `Bearer ${token}`,

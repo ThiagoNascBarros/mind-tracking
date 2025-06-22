@@ -7,7 +7,7 @@ import Footer from "../components/Footer/Footer";
 
 async function verificarQuestionarioDiario(userId: string, token: string): Promise<boolean> {
     try {
-        const response = await fetch(`http://100.26.137.243:3000/questionario/diario/verificar/${userId}`, {
+        const response = await fetch(`http://34.200.62.154:3000/questionario/diario/verificar/${userId}`, {
             headers: {
                 "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"
