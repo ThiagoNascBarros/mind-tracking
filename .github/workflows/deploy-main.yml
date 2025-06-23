@@ -24,7 +24,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: [self-hosted, aws-ec2-front]
+    runs-on: ubuntu-latest
     steps:
       - name: Create Docker network (if not exists)
         run: |
