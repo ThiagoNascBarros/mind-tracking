@@ -19,12 +19,12 @@ jobs:
       - name: Build Docker image
         run: docker build -t mindtrack/mindtracking-front:latest .
 
-      - name: Push image to Docker Hub
+      - name: Push Docker image
         run: docker push mindtrack/mindtracking-front:latest
 
   deploy:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Create Docker network (if not exists)
         run: |
@@ -37,10 +37,10 @@ jobs:
           docker stop mindtracking-front || true
           docker rm mindtracking-front || true
 
-      - name: Pull latest image from Docker Hub
+      - name: Pull latest frontend image
         run: docker pull mindtrack/mindtracking-front:latest
 
-      - name: Run new container
+      - name: Run frontend container
         run: |
           docker run -d \
             --restart always \
