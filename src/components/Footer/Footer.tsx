@@ -99,7 +99,7 @@ export default function Footer() {
               Contato
             </h2>
             <span className="text-sm sm:text-[14px] text-[#E5E7EB] hover:text-white transition-colors duration-300">
-              (11) 99999-9999
+              (11) 98131-9707
             </span>
             <span className="text-sm sm:text-[14px] text-[#E5E7EB] hover:text-white transition-colors duration-300">
                             suporte.mindtrack@gmail.com

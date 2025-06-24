@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Header from "../components/Header/Header";
-import { LogOut,TriangleAlert,RotateCcwKey } from 'lucide-react';
+import { LogOut,TriangleAlert,RotateCcwKey,Trash2 } from 'lucide-react';
 
 interface User {
   id: number;
@@ -145,7 +145,7 @@ export default function Perfil() {
               onClick={() => setShowExcluirModal(true)}
               className="w-12 h-12 flex items-center justify-center cursor-pointer bg-red-500 hover:bg-red-600 text-white rounded-full transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg hover:shadow-red-500/30 focus:outline-none focus:ring-2 focus:ring-red-400"
             >
-              <TriangleAlert size={24} />
+              <Trash2 size={24} />
             </button>
           </div>
         </div>

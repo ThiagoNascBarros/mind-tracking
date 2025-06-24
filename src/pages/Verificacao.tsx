@@ -133,10 +133,17 @@ export default function CodigoVerificacao() {
             {[0, 1, 2, 3].map((_, index) => (
               <input
                 key={index}
-                type="number"
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
                 maxLength={1}
                 className="w-18 h-18 text-center text-2xl rounded-2xl bg-[#D9D9D9] text-black border border-[rgba(400,400,400,0.45)] focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onChange={(e) => handleChange(index, e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/\D/g, ''); // só permite dígitos
+                  if (value.length > 1) return; // impede mais de um caractere
+                  e.target.value = value;
+                  handleChange(index, value);
+                }}
                 ref={(el) => {
                   inputsRef.current[index] = el;
                 }}

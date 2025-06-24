@@ -281,7 +281,6 @@ const QuestionarioDiario: React.FC = () => {
           </div>
         </div>
       </div>
-      <QuestionnaireFooter />
     </div>
   );
 };

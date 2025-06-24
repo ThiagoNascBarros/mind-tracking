@@ -2,6 +2,19 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Eye, EyeClosed } from "lucide-react"
 import Logo from '../../public/images/logo.png';
+import { ArrowLeft } from 'lucide-react';
+
+// Função de validação igual ao cadastro
+const validarSenha = (senha: string) => {
+  const regex = /^(?=.*[A-Z])(?=.*[@$!%*?&#._-]).+$/;
+  if (!senha || senha.length < 6) {
+    return 'A senha deve conter pelo menos 1 letra maiúscula, 1 caractere especial e mínimo de 6 caracteres';
+  }
+  if (!regex.test(senha)) {
+    return 'A senha deve conter pelo menos 1 letra maiúscula, 1 caractere especial e mínimo de 6 caracteres';
+  }
+  return '';
+};
 
 export default function AlterarSenha() {
   const [novaSenha, setNovaSenha] = useState('');
@@ -12,11 +25,6 @@ export default function AlterarSenha() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const validarSenha = (senha: string) => {
-    if (senha.length < 6) return 'A senha deve ter no mínimo 6 caracteres.';
-    return '';
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const novosErros: { novaSenha?: string; confirmarSenha?: string } = {};
@@ -24,8 +32,10 @@ export default function AlterarSenha() {
     const erroNovaSenha = validarSenha(novaSenha);
     if (erroNovaSenha) novosErros.novaSenha = erroNovaSenha;
 
-    if (confirmarSenha !== novaSenha) {
-      novosErros.confirmarSenha = 'As senhas não coincidem!';
+    if (!confirmarSenha) {
+      novosErros.confirmarSenha = 'Obrigatório';
+    } else if (confirmarSenha !== novaSenha) {
+      novosErros.confirmarSenha = 'As senhas não coincidem';
     }
 
     setErros(novosErros);
@@ -139,12 +149,12 @@ export default function AlterarSenha() {
           </button>
         </form>
 
-        <div className="mt-6 text-center">
+        <div className="mt-6 text-center flex flex-col items-center">
           <button
             onClick={() => navigate('/sign-in')}
-            className="text-sm text-blue-400 hover cursor-pointer"
+            className="text-base font-bold flex gap-2 items-center justify-center text-blue-400 hover cursor-pointer"
           >
-            ← Voltar para o login
+            <ArrowLeft size={24} fontWeight={500} /> Voltar para o login
           </button>
         </div>
       </div>

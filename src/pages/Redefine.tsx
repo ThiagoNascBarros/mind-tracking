@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 import Logo from '../../public/images/logo.png';
 
 export default function RedefinirSenha() {
@@ -74,12 +75,12 @@ export default function RedefinirSenha() {
           </button>
         </form>
 
-        <div className="mt-6 text-center">
+        <div className="mt-6 text-center flex flex-col items-center">
           <button
             onClick={() => navigate(-1)}
-            className="text-sm text-blue-400 hover cursor-pointer"
+            className="text-base font-bold flex gap-2 items-center justify-center text-blue-400 hover cursor-pointer"
           >
-            ← Voltar para o login
+            <ArrowLeft size={24} fontWeight={500} /> Voltar para o login
           </button>
         </div>
       </div>
