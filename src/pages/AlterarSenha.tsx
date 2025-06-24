@@ -151,10 +151,10 @@ export default function AlterarSenha() {
 
         <div className="mt-6 text-center flex flex-col items-center">
           <button
-            onClick={() => navigate('/sign-in')}
+            onClick={() => navigate('/perfil')}
             className="text-base font-bold flex gap-2 items-center justify-center text-blue-400 hover cursor-pointer"
           >
-            <ArrowLeft size={24} fontWeight={500} /> Voltar para o login
+            <ArrowLeft size={24} fontWeight={500} /> Voltar para seu perfil
           </button>
         </div>
       </div>
