@@ -25,7 +25,6 @@ const Questionario: React.FC<QuestionarioProps> = ({ mostrarSaudacao = false }) 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [enviando, setEnviando] = useState(false);
-  const [finalizando, setFinalizando] = useState(false);
 
   useEffect(() => {
     carregarPerguntas();
@@ -86,26 +85,23 @@ const Questionario: React.FC<QuestionarioProps> = ({ mostrarSaudacao = false }) 
   };
 
   const handleEnviar = async () => {
-    if (enviando || finalizando) return; // Previne múltiplos cliques
+    if (enviando) return; // Previne múltiplos cliques
+    
     try {
       setEnviando(true);
       const token = sessionStorage.getItem("token");
       const user = JSON.parse(sessionStorage.getItem("user") || "{}");
+
       const respostasArray = perguntas.map(pergunta => ({
         pergunta_id: pergunta.id,
         alternativa_id: respostas[pergunta.id] || null
       }));
+
       if (respostasArray.some(r => r.alternativa_id === null)) {
         alert("Por favor, responda todas as perguntas!");
-        setEnviando(false);
         return;
       }
-      // Simula a barra indo para 100% antes de enviar
-      setFinalizando(true);
-      await new Promise(resolve => setTimeout(resolve, 400)); // animação rápida
-      // Força a barra para 100%
-      setIndiceAtual(perguntas.length);
-      await new Promise(resolve => setTimeout(resolve, 400)); // espera a animação
+
       const response = await fetch("http://34.200.62.154:3000/questionario/responder", {
         method: "POST",
         headers: {
@@ -114,10 +110,12 @@ const Questionario: React.FC<QuestionarioProps> = ({ mostrarSaudacao = false }) 
         },
         body: JSON.stringify({ usuario_id: user.id, respostas: respostasArray })
       });
+
       const data = await response.json();
       if (data.success) {
         user.questionario_inicial = true;
         sessionStorage.setItem("user", JSON.stringify(user));
+
         navigate('/dashboard');
       } else {
         alert(`Erro: ${data.message}`);
@@ -127,7 +125,6 @@ const Questionario: React.FC<QuestionarioProps> = ({ mostrarSaudacao = false }) 
       alert("Erro ao enviar respostas");
     } finally {
       setEnviando(false);
-      setFinalizando(false);
     }
   };
 
@@ -169,11 +166,7 @@ const Questionario: React.FC<QuestionarioProps> = ({ mostrarSaudacao = false }) 
   }
 
   const perguntaAtual = perguntas[indiceAtual];
-  // Corrige o cálculo para que a barra de progresso comece em 0% e só avance ao responder
-  const progresso = perguntas.length > 0 ? (indiceAtual / perguntas.length) * 100 : 0;
-  // Corrige o cálculo para mostrar 100% ao finalizar
-  const progressoFinal = finalizando ? 100 : progresso;
-  const textoProgresso = finalizando ? 100 : Math.round(progresso);
+  const progresso = (indiceAtual / perguntas.length) * 100;
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -186,11 +179,11 @@ const Questionario: React.FC<QuestionarioProps> = ({ mostrarSaudacao = false }) 
             <div className="w-full bg-[#1E2A48] h-1.5 md:h-2 rounded-md">
               <div 
                 className="bg-blue-500 h-1.5 md:h-2 rounded-md transition-all duration-300" 
-                style={{ width: `${progressoFinal}%` }} 
+                style={{ width: `${progresso}%` }} 
               />
             </div>
             <div className="text-xs md:text-sm text-right mt-1 text-gray-400">
-              {textoProgresso}%
+              {Math.round(progresso)}%
             </div>
           </div>
 
